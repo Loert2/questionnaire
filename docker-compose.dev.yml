@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  graphql-db:
+    build: ./graphqlDB
+    ports:
+      - 10100:5432
+    env_file: ./environment/graphql_db.env

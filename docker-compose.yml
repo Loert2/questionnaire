@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  graphql:
+    depends_on:
+      - graphql-db
+    build: ./graphql
+    env_file:
+      - ./environment/node.env
+      - ./environment/graphql_db.env
+    environment:
+      - GRAPHQL_DB_HOST=graphql-db
+    ports:
+      - "4000:4000"
+    links:
+      - graphql-db
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  graphql-db:
+    build: ./graphqlDB
+    env_file: ./environment/graphql_db.env
