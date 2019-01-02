@@ -2,33 +2,34 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import TestScreen from "./HomeScreen";
+import TestScreen from "./TestScreen";
 
 class RegistrationScreen extends Component {
   state = {};
-  static navigationOptions = {
-    header: "Регистрация"
-  };
   fileds = [
     {
       name: "full_name",
       label: "ФИО",
-      type: "text"
+      type: "none",
+      secure: false
     },
     {
       name: "e_mail",
       label: "Электронная почта",
-      type: "text"
+      type: "emailAddress",
+      secure: false
     },
     {
       name: "password",
       label: "Пароль",
-      type: "password"
+      type: "password",
+      secure: true
     },
     {
       name: "confirmPassword",
       label: "Подтвердить пароль",
-      type: "password"
+      type: "password",
+      secure: true
     }
   ];
 
@@ -38,7 +39,7 @@ class RegistrationScreen extends Component {
       this.setState({ error: "" });
       this.context.history.push("/TestScreen");
     } else {
-      this.setState({ error: "Пароль не совпадает" });
+      this.setState({ error: "Пароли не совпадают" });
     }
   };
 
@@ -47,7 +48,7 @@ class RegistrationScreen extends Component {
       <FieldForm
         fileds={this.fileds}
         button="Зарегестрироваться"
-        onSubmit={this._handleAuhtSubmit}
+        onPress={this._handleRegSubmit}
         error={this.state.error}
       />
     );

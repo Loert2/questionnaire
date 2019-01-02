@@ -2,23 +2,22 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import TestScreen from "./HomeScreen";
+import TestScreen from "./TestScreen";
 
 class AuthorisationScreen extends Component {
   state = {};
-  static navigationOptions = {
-    header: "Авторизация"
-  };
   fileds = [
     {
       name: "e_mail",
       label: "Электронная почта",
-      type: "text"
+      type: "emailAddress",
+      secure: false
     },
     {
       name: "password",
       label: "Пароль",
-      type: "password"
+      type: "password",
+      secure: true
     }
   ];
 
@@ -38,7 +37,7 @@ class AuthorisationScreen extends Component {
       <FieldForm
         fileds={this.fileds}
         button="Войти"
-        onSubmit={this._handleAuhtSubmit}
+        onPress={this._handleAuhtSubmit}
         error={this.state.error}
       />
     );
@@ -61,4 +60,5 @@ const sIn = graphql(SIGN_DOWN_MUTATION, {
       })
   })
 });
+
 export default compose(sIn)(AuthorisationScreen);

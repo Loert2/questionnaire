@@ -15,34 +15,24 @@ export default class HomeScreen extends React.Component {
   };
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.text}>Тест по электробезопасности</Text>
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}
-        >
-          <Text style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </Text>
-        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
+    flexGrow: 1,
+    backgroundColor: "#ffff4f",
+    marginTop: 200,
+    marginBottom: 300
   },
   text: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
+    marginTop: 20,
+    color: "#000000",
+    fontSize: 32,
+    lineHeight: 50,
     textAlign: "center",
     fontFamily: "space-mono"
   }
