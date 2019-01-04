@@ -6,6 +6,9 @@ import TestScreen from "./TestScreen";
 
 class RegistrationScreen extends Component {
   state = {};
+  static navigationOptions = {
+    header: null
+  };
   fileds = [
     {
       name: "full_name",
@@ -33,11 +36,11 @@ class RegistrationScreen extends Component {
     }
   ];
 
-  _handleRegSubmit = ({ login, name, password, confirmPassword }) => {
+  _handleRegSubmit = ({ e_mail, full_name, password, confirmPassword }) => {
     if (password === confirmPassword) {
       this.props.update({ e_mail, full_name, password }).then(res => {});
       this.setState({ error: "" });
-      this.context.history.push("/TestScreen");
+      this.props.navigation.navigate("Test");
     } else {
       this.setState({ error: "Пароли не совпадают" });
     }

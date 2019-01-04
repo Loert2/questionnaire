@@ -34,7 +34,7 @@ class FieldForm extends Component {
               onChangeText={value => this.setState({ [el.name]: value })}
             />
           ))}
-          {this.props.error && (
+          {this.props.error !== 0 && (
             <Text style={styles.error}>{this.props.error}</Text>
           )}
           <TouchableOpacity

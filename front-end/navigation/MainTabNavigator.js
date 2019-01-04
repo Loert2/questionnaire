@@ -9,11 +9,13 @@ import TabBarText from "../components/TabBarText";
 import HomeScreen from "../screens/HomeScreen";
 import AuthorizationScreen from "../screens/AuthorizationScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
+import TestScreen from "../screens/TestScreen";
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
   Authorization: { screen: AuthorizationScreen },
-  Registration: { screen: RegistrationScreen }
+  Registration: { screen: RegistrationScreen },
+  Test: { screen: TestScreen }
 });
 
 HomeStack.navigationOptions = {
