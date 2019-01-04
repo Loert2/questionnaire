@@ -9,7 +9,7 @@ const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
           style={styles.previousBtn}
           onPress={previousBtn.onClickHandler}
         >
-          <Text style={styles.buttonText}>"Назад"</Text>
+          <Text style={styles.buttonText}>Назад</Text>
         </TouchableOpacity>
       )}
       {step < lastStep && (
@@ -18,16 +18,16 @@ const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
           onPress={nextBtn.onClickHandler}
           disabled={nextBtn.disabled}
         >
-          <Text style={styles.buttonText}>"Вперед"</Text>
+          <Text style={styles.buttonText}>Вперед</Text>
         </TouchableOpacity>
       )}
       {step === lastStep && (
         <TouchableOpacity
-          style={styles.nextBtn}
+          style={styles.submitBtn}
           onPress={submitBtn.onClickHandler}
           disabled={submitBtn.disabled}
         >
-          <Text style={styles.buttonText}>"Завершить тест"</Text>
+          <Text style={styles.buttonText}>Завершить тест</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -41,16 +41,43 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   previousBtn: {
-    borderColor: "#000000",
-    borderWidth: 1
+    backgroundColor: "#ffff4f",
+    borderRadius: 10,
+    marginLeft: 50,
+    marginRight: 250,
+    zIndex: 1,
+    position: "absolute",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 24,
+    paddingRight: 24
   },
   nextBtn: {
-    marginLeft: 30,
-    borderColor: "#000000",
-    borderWidth: 1
+    backgroundColor: "#ffff4f",
+    borderRadius: 10,
+    marginLeft: 250,
+    marginRight: 50,
+    zIndex: 2,
+    position: "absolute",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 24,
+    paddingRight: 24
   },
   buttonText: {
     color: "#000000",
     textAlign: "center"
+  },
+  submitBtn: {
+    backgroundColor: "#00cc00",
+    borderRadius: 10,
+    marginTop: 60,
+    marginLeft: 125,
+    zIndex: 2,
+    position: "absolute",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 24,
+    paddingRight: 24
   }
 });
