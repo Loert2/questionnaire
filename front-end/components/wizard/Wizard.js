@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 
 import Actions from "./Actions";
+import QuestionForm from "../QuestionForm";
+import { View } from "react-native";
 
 class Wizard extends PureComponent {
   constructor(props) {
@@ -13,7 +15,6 @@ class Wizard extends PureComponent {
   }
 
   goNext() {
-    const { nextBtn } = this.props;
     const { step } = this.state;
     switch (step) {
       case 1:
@@ -25,29 +26,34 @@ class Wizard extends PureComponent {
     }
 
     this.setState({ step: step + 1 });
-    nextBtn && nextBtn.onClickHandler();
   }
 
   goPrevious() {
-    const { previousBtn } = this.props;
     const { step } = this.state;
     this.setState({ step: step - 1 });
-    previousBtn && previousBtn.onClickHandler();
   }
 
+  submitBtn() {
+    console.log("success");
+  }
   render() {
-    const { title, steps, previousBtn, nextBtn, submitBtn } = this.props;
-    const nBtn = { ...nextBtn, onClickHandler: this.goNext };
-    const pBtn = { ...previousBtn, onClickHandler: this.goPrevious };
     const { step } = this.state;
     return (
-      <Actions
-        step={step}
-        lastStep={11}
-        previousBtn={pBtn}
-        nextBtn={nBtn}
-        submitBtn={submitBtn}
-      />
+      <View>
+        <QuestionForm
+          step={step}
+          question={this.props.question}
+          answer={this.props.answer}
+          handleChecked={this.props.handleChecked}
+        />
+        <Actions
+          step={step}
+          lastStep={11}
+          previousBtn={this.goPrevious}
+          nextBtn={this.goNext}
+          submitBtn={this.submitBtn}
+        />
+      </View>
     );
   }
 }

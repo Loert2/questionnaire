@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import QuestionForm from "../components/QuestionForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import update from "immutability-helper";
 import Wisard from "../components/wizard/Wizard";
-import { View } from "react-native";
 
 class TestScreen extends Component {
   state = {
@@ -63,28 +61,12 @@ class TestScreen extends Component {
   };
 
   render() {
-    const previousBtn = {
-      onClickHandler: () => {}
-    };
-    const nextBtn = {
-      onClickHandler: () => {}
-    };
-    const submitBtn = {
-      onClickHandler: () => {}
-    };
     return (
-      <View>
-        <QuestionForm
-          question={this.state.question}
-          answer={this.state.question.answer}
-          handleChecked={this._handleChecked}
-        />
-        <Wisard
-          previousBtn={previousBtn}
-          nextBtn={nextBtn}
-          submitBtn={submitBtn}
-        />
-      </View>
+      <Wisard
+        question={this.state.question}
+        answer={this.state.question.answer}
+        handleChecked={this._handleChecked}
+      />
     );
   }
 }

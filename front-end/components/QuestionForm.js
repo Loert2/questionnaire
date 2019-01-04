@@ -12,7 +12,9 @@ class QuestionForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.question.name}</Text>
+        <Text style={styles.text}>
+          Вопрос {this.props.step}: {this.props.question.name}
+        </Text>
         {this.props.answer &&
           this.props.answer.map(el => (
             <View>

@@ -5,17 +5,14 @@ const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
   return (
     <View style={styles.container}>
       {step > 1 && (
-        <TouchableOpacity
-          style={styles.previousBtn}
-          onPress={previousBtn.onClickHandler}
-        >
+        <TouchableOpacity style={styles.previousBtn} onPress={previousBtn}>
           <Text style={styles.buttonText}>Назад</Text>
         </TouchableOpacity>
       )}
       {step < lastStep && (
         <TouchableOpacity
           style={styles.nextBtn}
-          onPress={nextBtn.onClickHandler}
+          onPress={nextBtn}
           disabled={nextBtn.disabled}
         >
           <Text style={styles.buttonText}>Вперед</Text>
@@ -24,7 +21,7 @@ const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
       {step === lastStep && (
         <TouchableOpacity
           style={styles.submitBtn}
-          onPress={submitBtn.onClickHandler}
+          onPress={submitBtn}
           disabled={submitBtn.disabled}
         >
           <Text style={styles.buttonText}>Завершить тест</Text>
