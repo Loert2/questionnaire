@@ -2,6 +2,8 @@ import { Router } from "express";
 import graphqlHTTP from "express-graphql";
 import schema from "./graphql/schema";
 
+import { getUserId, setUserId, cleanUpSessionId } from "./databse/db-sessions";
+
 const router = Router();
 
 const developerMode = true; //process.env.NODE_ENV !== 'production';
