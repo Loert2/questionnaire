@@ -1,6 +1,6 @@
 import { Router } from "express";
 import graphqlHTTP from "express-graphql";
-import schema from "./schema/schema";
+import schema from "./graphql/schema";
 import cookieSession from "cookie-session";
 import uuid from "uuid";
 

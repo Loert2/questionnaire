@@ -1,0 +1,7 @@
+node_modules
+.dockerignore
+Dockerfile
+yarn-debug.log
+.git
+.hg
+.svn
