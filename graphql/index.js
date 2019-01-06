@@ -6,4 +6,4 @@ import resolveQuery from "./query";
 express()
   .use(cors({ origin: true, credentials: true }))
   .use(resolveQuery)
-  .listen(4000, () => console.log("Server has started"));
+  .listen(4000, () => console.log("Server has started port 4000"));

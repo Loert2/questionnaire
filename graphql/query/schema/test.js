@@ -62,7 +62,7 @@ export const TicketField = {
 
 // === === === === === === QUERY QUESTION === === === === === ===
 
-export const questionType = new GraphQLObjectType({
+export const QuestionType = new GraphQLObjectType({
   name: "Question",
   interfaces: [nodeInterface],
   fields: () => ({
@@ -84,7 +84,7 @@ export const QuestionField = {
 
 // === === === === === === QUERY ANSWER === === === === === ===
 
-export const answerType = new GraphQLObjectType({
+export const AnswerType = new GraphQLObjectType({
   name: "Answer",
   interfaces: [nodeInterface],
   fields: () => ({

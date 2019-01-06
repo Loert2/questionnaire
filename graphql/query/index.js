@@ -4,11 +4,11 @@ import schema from "./schema/schema";
 import cookieSession from "cookie-session";
 import uuid from "uuid";
 
-import { getUserId, setUserId, cleanUpSessionId } from "./databse/db-session";
+import { getUserId, setUserId, cleanUpSessionId } from "./database/db-session";
 
 const router = Router();
 
-const developerMode = true; //process.env.NODE_ENV !== 'production';
+const developerMode = true;
 
 router.use(
   cookieSession({

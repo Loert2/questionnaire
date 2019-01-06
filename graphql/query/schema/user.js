@@ -17,8 +17,8 @@ import { createMutation, createPayload } from "./utilities";
 
 import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
 
-import { AnswerUserConnection } from "./answerUser";
-import { ResultConnection } from "./result";
+//import { AnswerUserConnection } from "./answerUser";
+//import { ResultConnection } from "./result";
 
 // === === === === === === QUERY === === === === === ===
 
@@ -34,9 +34,9 @@ export const UserType = new GraphQLObjectType({
     e_mail: {
       name: "e_mail",
       type: GraphQLString
-    },
-    AnswerUser: AnswerUserConnection,
-    Result: ResultConnection
+    }
+    //    AnswerUser: AnswerUserConnection,
+    //    Result: ResultConnection
   })
 });
 

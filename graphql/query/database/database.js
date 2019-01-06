@@ -14,11 +14,11 @@ const config = {
   production: {
     client: "pg",
     connection: {
-      host: process.env.GRAPHQL_DB_HOST,
-      port: process.env.GRAPHQL_DB_PORT,
-      user: process.env.GRAPHQL_DB_USER,
-      password: process.env.GRAPHQL_DB_PASSWORD,
-      database: process.env.GRAPHQL_DB_DATABASE
+      host: process.env.POSTGRESQL_DB_HOST,
+      port: process.env.POSTGRESQL_DB_PORT,
+      user: process.env.POSTGRESQL_DB_USER,
+      password: process.env.POSTGRESQL_DB_PASSWORD,
+      database: process.env.POSTGRESQL_DB_DATABASE
     }
   }
 };
