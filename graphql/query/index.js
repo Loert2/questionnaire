@@ -1,10 +1,10 @@
 import { Router } from "express";
 import graphqlHTTP from "express-graphql";
-import schema from "./graphql/schema";
+import schema from "./schema/schema";
 import cookieSession from "cookie-session";
 import uuid from "uuid";
 
-import { getUserId, setUserId, cleanUpSessionId } from "./databse/db-sessions";
+import { getUserId, setUserId, cleanUpSessionId } from "./databse/db-session";
 
 const router = Router();
 

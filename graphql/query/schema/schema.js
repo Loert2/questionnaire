@@ -18,7 +18,6 @@ import {
 import { TestField } from "./test";
 
 const query = new GraphQLObjectType({
-  description: "Main query",
   name: "Query",
   fields: () => ({
     user: UserField,
@@ -28,7 +27,6 @@ const query = new GraphQLObjectType({
 });
 
 const mutation = new GraphQLObjectType({
-  description: "Main mutations",
   name: "Mutation",
   fields: () => ({
     UserSignIn: UserSignInField,

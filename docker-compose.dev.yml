@@ -1,8 +1,8 @@
 version: "3.3"
 
 services:
-  graphql-db:
-    build: ./graphqlDB
+  postgresql-db:
+    build: ./postgresqlDB
     ports:
       - 10100:5432
-    env_file: ./environment/graphql_db.env
+    env_file: ./environment/postgresql_db.env

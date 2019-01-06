@@ -3,20 +3,20 @@ version: "3.3"
 services:
   graphql:
     depends_on:
-      - graphql-db
+      - postgresql-db
     build: ./graphql
     env_file:
       - ./environment/node.env
-      - ./environment/graphql_db.env
+      - ./environment/postgresql_db.env
     environment:
-      - GRAPHQL_DB_HOST=graphql-db
+      - POSTGRESQL_DB_HOST=postgresql-db
     ports:
       - "4000:4000"
     links:
-      - graphql-db
+      - postgresql-db
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  graphql-db:
-    build: ./graphqlDB
-    env_file: ./environment/graphql_db.env
+  postgresql-db:
+    build: ./postgresqlDB
+    env_file: ./environment/postgresql_db.env
