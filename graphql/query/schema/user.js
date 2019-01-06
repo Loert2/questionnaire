@@ -6,10 +6,9 @@ import {
 
 import {
   getUserById,
-  getUserByLogin,
+  getUserByE_mail,
   addUser,
-  changePassword,
-  changeName
+  changePassword
 } from "../database/db-user";
 
 import { nodeInterface } from "./node";
@@ -18,27 +17,26 @@ import { createMutation, createPayload } from "./utilities";
 
 import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
 
-import { ProjectConnection } from "./project";
+import { AnswerUserConnection } from "./answerUser";
+import { ResultConnection } from "./result";
 
 // === === === === === === QUERY === === === === === ===
 
 export const UserType = new GraphQLObjectType({
-  description: "Current user",
   name: "User",
   interfaces: [nodeInterface],
   fields: () => ({
-    id: globalIdField(),
+    id_user: globalIdField(),
     full_name: {
-      description: "User full_name",
       name: "full_name",
       type: GraphQLString
     },
-    login: {
-      description: "User e_mail",
+    e_mail: {
       name: "e_mail",
       type: GraphQLString
     },
-    project: ProjectConnection
+    AnswerUser: AnswerUserConnection,
+    Result: ResultConnection
   })
 });
 
@@ -64,19 +62,19 @@ const userMutationPayload = createPayload({
 const signInInput = {
   name: "UserSignInInput",
   fields: () => ({
-    login: { name: "e_mail", type: GraphQLString },
+    e_mail: { name: "e_mail", type: GraphQLString },
     password: { name: "password", type: GraphQLString }
   })
 };
 
 const signInResolve = async (obj, args, context) => {
-  const id = context.userId;
-  if (id) {
+  const id_user = context.userId;
+  if (id_user) {
     return { error: "alreadySignedIn" };
   }
-  const user = await getUserByLogin(args.login);
+  const user = await getUserByE_mail(args.e_mail);
   if (user && user.password === args.password) {
-    await context.setUserId(user.id);
+    await context.setUserId(user.id_user);
     return { user };
   }
   return { error: "wrongCredantials" };
@@ -93,8 +91,8 @@ export const UserSignInField = createMutation({
 const signUpInput = {
   name: "UserSignUpInput",
   fields: () => ({
-    name: { name: "full_name", type: GraphQLString },
-    login: { name: "e_mail", type: GraphQLString },
+    full_name: { name: "full_name", type: GraphQLString },
+    e_mail: { name: "e_mail", type: GraphQLString },
     password: { name: "password", type: GraphQLString }
   })
 };
@@ -107,14 +105,14 @@ const signUpResolve = async (obj, args, context) => {
     return { error: "alreadySignedIn" };
   }
 
-  const signedUpUser = await getUserByLogin(args.e_mail);
+  const signedUpUser = await getUserByE_mail(args.e_mail);
   if (signedUpUser) {
     return { error: "e_mailAlreadyInUse" };
   }
 
   const id = await addUser({ e_mail, full_name, password });
-  const user = await getUserById(id);
-  await context.setUserId(user.id);
+  const user = await getUserById(id_user);
+  await context.setUserId(user.id_user);
 
   return { user };
 };
@@ -133,8 +131,8 @@ const signOutInput = {
 };
 
 const signOutResolve = async (obj, args, context) => {
-  const id = context.userId;
-  if (!id) {
+  const id_user = context.userId;
+  if (!id_user) {
     return { error: "notSignedIn" };
   }
   await context.setUserId(null);
@@ -157,15 +155,15 @@ const changePasswordInput = {
 };
 
 const changePasswordResolve = async (obj, args, context) => {
-  const id = context.userId;
+  const id_user = context.userId;
   const { password } = args;
 
-  if (!id) {
+  if (!id_user) {
     return { error: "notSignedIn" };
   }
 
-  await changePassword({ id, password });
-  const user = await getUserById(id);
+  await changePassword({ id_user, password });
+  const user = await getUserById(id_user);
 
   return { user };
 };
