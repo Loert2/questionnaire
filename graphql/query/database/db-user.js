@@ -6,27 +6,30 @@ const rawByField = (fieldName, value) => table().where(fieldName, "=", value);
 const dataExists = data => data && data[0];
 
 export const getUserById = async id_user => {
-  const fields = ["e_mail", "full_name", "password", "role"];
+  const fields = ["e_mail", "full_name", "password"];
   const data = await rawByField("id_user", id_user).select(...fields);
   return dataExists(data) ? { id_user, ...data[0] } : null;
 };
 
-export const getUserByE_mail = async login => {
-  const fields = ["id", "full_name", "password"];
+export const getUserByE_mail = async e_mail => {
+  const fields = ["id_user", "full_name", "password"];
   const data = await rawByField("e_mail", e_mail).select(...fields);
   return dataExists(data) ? { e_mail, ...data[0] } : null;
 };
 
-export const changePassword = async ({ id, password }) => {
-  await rawByField("id", id).update({ password, updated_at: new Date() });
+export const changePassword = async ({ id_user, password }) => {
+  await rawByField("id_user", id_user).update({
+    password,
+    updated_at: new Date()
+  });
 };
 
-export const addUser = async ({ e_mail, full_name, password, role }) => {
+export const addUser = async ({ e_mail, full_name, password }) => {
   const timestamp = { created_at: new Date(), updated_at: new Date() };
-  const data = { e_mail, full_name, password, role, ...timestamp };
+  const data = { e_mail, full_name, password, ...timestamp };
 
   const returningData = await table()
-    .returning("id")
+    .returning("id_user")
     .insert(data);
 
   return dataExists(returningData) ? returningData[0] : null;

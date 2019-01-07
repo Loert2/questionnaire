@@ -3,11 +3,11 @@ CREATE TABLE "user" (
     "e_mail" varchar(100) NOT NULL,
     "full_name" varchar(100) NOT NULL,
     "password" varchar(100) NOT NULL,
-    "role": VARCHAR(20) NULL
+    "role" VARCHAR(20) NULL
 );
 
 CREATE TABLE "session" (
-  "id" SERIAL PRIMARY KEY,
+  "id_session" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "user" ("id_user"),
   "updated_at" timestamptz NOT NULL DEFAULT now()
 );
@@ -38,14 +38,14 @@ CREATE TABLE "question" (
   "name" VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE "anwer" (
+CREATE TABLE "answer" (
   "id_answer" SERIAL PRIMARY KEY,
   "id_question" INTEGER NOT NULL REFERENCES "question" ("id_question"),
   "name" VARCHAR(255) NOT NULL,
   "is_valid" BOOLEAN NOT NULL
 );
 
-CREATE TABLE "anwer_user" (
+CREATE TABLE "answer_user" (
   "id_anwer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "user" ("id_user"),
   "id_question" INTEGER NOT NULL REFERENCES "question" ("id_question"),

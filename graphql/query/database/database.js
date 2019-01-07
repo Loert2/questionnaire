@@ -6,9 +6,9 @@ const config = {
     connection: {
       host: "localhost",
       port: 10100,
-      user: "graphql",
+      user: "questionnaire",
       password: "password",
-      database: "graphql"
+      database: "questionnaire"
     }
   },
   production: {
