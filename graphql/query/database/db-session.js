@@ -1,6 +1,6 @@
 import db from "./database";
 
-const table = () => db("sessions");
+const table = () => db("session");
 const raw = sessionId => table().where("id_session", "=", sessionId);
 
 const dataExists = data => data && data[0];
