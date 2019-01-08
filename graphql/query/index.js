@@ -19,8 +19,8 @@ router.use(
 );
 
 router.use(async (req, res, next) => {
-  let sessionId = req.session.id || uuid();
-  req.session = { id: sessionId };
+  let sessionId = req.session.id_session || uuid();
+  req.session = { id_session: sessionId };
 
   req.sessionInfo = {
     userId: await getUserId(sessionId),

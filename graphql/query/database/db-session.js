@@ -1,7 +1,7 @@
 import db from "./database";
 
 const table = () => db("session");
-const raw = sessionId => table().where("id_session", "=", sessionId);
+const raw = sessionId => table().where("uuid", "=", sessionId);
 
 const dataExists = data => data && data[0];
 
@@ -26,7 +26,7 @@ const setUserId = async (sessionId, userId) => {
   if (oldUserId) {
     await raw(sessionId).update(data);
   } else {
-    await table().insert({ id_session: sessionId, ...data });
+    await table().insert({ uuid: sessionId, ...data });
   }
 };
 

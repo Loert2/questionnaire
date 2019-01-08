@@ -11,7 +11,14 @@ import {
 const { nodeInterface, nodeField } = nodeDefinitions(
   async (globalId, context) => {
     const userId = await context.userId;
-    const { type, id } = fromGlobalId(globalId);
+    const {
+      type,
+      id_user,
+      id_test,
+      id_ticket,
+      id_question,
+      id_answer
+    } = fromGlobalId(globalId);
 
     switch (type) {
       case "User":
@@ -29,11 +36,11 @@ const { nodeInterface, nodeField } = nodeDefinitions(
         if (!Ticket) return null;
         return { ...Ticket, _type: require("./test").TicketType };
       case "Question":
-        const Question = await getQuestionsByTicketId(id_ticket);
+        const Question = await getQuestionsById(id_question);
         if (!Question) return null;
         return { ...Question, _type: require("./test").QuestionType };
       case "Answer":
-        const Answer = await getAnswersByQuestionId(id_question);
+        const Answer = await getAnswersById(id_answer);
         if (!Answer) return null;
         return { ...Answer, _type: require("./test").AnswerType };
       default:

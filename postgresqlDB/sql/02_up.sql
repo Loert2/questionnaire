@@ -8,6 +8,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "session" (
   "id_session" SERIAL PRIMARY KEY,
+  "uuid" varchar(100) NOT NULL,
   "id_user" INTEGER NOT NULL REFERENCES "user" ("id_user"),
   "updated_at" timestamptz NOT NULL DEFAULT now()
 );
