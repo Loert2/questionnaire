@@ -26,7 +26,7 @@ export const UserType = new GraphQLObjectType({
   name: "User",
   interfaces: [nodeInterface],
   fields: () => ({
-    id_user: globalIdField(),
+    id: globalIdField(),
     full_name: {
       name: "full_name",
       type: GraphQLString
@@ -110,7 +110,7 @@ const signUpResolve = async (obj, args, context) => {
     return { error: "e_mailAlreadyInUse" };
   }
 
-  const id = await addUser({ e_mail, full_name, password });
+  const id_user = await addUser({ e_mail, full_name, password });
   const user = await getUserById(id_user);
   await context.setUserId(user.id_user);
 

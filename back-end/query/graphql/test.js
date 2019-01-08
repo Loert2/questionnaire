@@ -23,7 +23,7 @@ export const TestType = new GraphQLObjectType({
   name: "Test",
   interfaces: [nodeInterface],
   fields: () => ({
-    id_test: globalIdField(),
+    id: globalIdField(),
     name: {
       name: "Name",
       type: GraphQLString
@@ -34,7 +34,7 @@ export const TestType = new GraphQLObjectType({
 export const TestField = {
   type: TestType,
   resolve: async (obj, args, context) => {
-    return await getTestById(test_id);
+    return await getTestById(id_test);
   }
 };
 
@@ -44,10 +44,10 @@ export const TicketType = new GraphQLObjectType({
   name: "Ticket",
   interfaces: [nodeInterface],
   fields: () => ({
-    id_ticket: globalIdField(),
+    id: globalIdField(),
     number_of_questions: {
       name: "Number_of_questions",
-      type: GraphQLString
+      type: GraphQLInt
     },
     test: TestField
   })
@@ -56,7 +56,7 @@ export const TicketType = new GraphQLObjectType({
 export const TicketField = {
   type: TicketType,
   resolve: async (obj, args, context) => {
-    return await getTicketById(ticket_id);
+    return await getTicketById(id_ticket);
   }
 };
 
@@ -66,7 +66,7 @@ export const QuestionType = new GraphQLObjectType({
   name: "Question",
   interfaces: [nodeInterface],
   fields: () => ({
-    id_question: globalIdField(),
+    id: globalIdField(),
     name: {
       name: "Name",
       type: GraphQLString
@@ -78,7 +78,7 @@ export const QuestionType = new GraphQLObjectType({
 export const QuestionField = {
   type: QuestionType,
   resolve: async (obj, args, context) => {
-    return await getQuestionsById(question_id);
+    return await getQuestionsById(id_question);
   }
 };
 
@@ -88,7 +88,7 @@ export const AnswerType = new GraphQLObjectType({
   name: "Answer",
   interfaces: [nodeInterface],
   fields: () => ({
-    id_question: globalIdField(),
+    id: globalIdField(),
     name: {
       name: "Name",
       type: GraphQLString
@@ -100,6 +100,6 @@ export const AnswerType = new GraphQLObjectType({
 export const AnswerField = {
   type: AnswerType,
   resolve: async (obj, args, context) => {
-    return await getAnswersById(question_id);
+    return await getAnswersById(id_answer);
   }
 };

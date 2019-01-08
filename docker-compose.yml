@@ -4,14 +4,14 @@ services:
   graphql:
     depends_on:
       - postgresql-db
-    build: ./graphql
+    build: ./back-end
     env_file:
       - ./environment/node.env
       - ./environment/postgresql_db.env
     environment:
       - POSTGRESQL_DB_HOST=postgresql-db
     ports:
-      - "4000:4000"
+      - "5000:5000"
     links:
       - postgresql-db
     volumes:
