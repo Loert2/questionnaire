@@ -1,6 +1,7 @@
 import {
   GraphQLObjectType,
   GraphQLString,
+  GraphQLInt,
   GraphQLInputObjectType
 } from "graphql";
 
@@ -27,7 +28,8 @@ export const TestType = new GraphQLObjectType({
     name: {
       name: "Name",
       type: GraphQLString
-    }
+    },
+    ticket: TicketField
   })
 });
 
@@ -49,7 +51,7 @@ export const TicketType = new GraphQLObjectType({
       name: "Number_of_questions",
       type: GraphQLInt
     },
-    test: TestField
+    question: QuestionField
   })
 });
 
@@ -71,7 +73,7 @@ export const QuestionType = new GraphQLObjectType({
       name: "Name",
       type: GraphQLString
     },
-    ticket: TicketField
+    answer: AnswerField
   })
 });
 
@@ -92,8 +94,7 @@ export const AnswerType = new GraphQLObjectType({
     name: {
       name: "Name",
       type: GraphQLString
-    },
-    question: QuestionField
+    }
   })
 });
 

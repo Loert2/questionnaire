@@ -1,6 +1,6 @@
 import db from "./database";
 
-const table = () => db("user");
+const table = () => db("system_user");
 const rawByField = (fieldName, value) => table().where(fieldName, "=", value);
 
 const dataExists = data => data && data[0];
@@ -19,15 +19,12 @@ export const getUserByE_mail = async e_mail => {
 
 export const changePassword = async ({ id_user, password }) => {
   await rawByField("id_user", id_user).update({
-    password,
-    updated_at: new Date()
+    password
   });
 };
 
 export const addUser = async ({ e_mail, full_name, password }) => {
-  const timestamp = { created_at: new Date(), updated_at: new Date() };
-  const data = { e_mail, full_name, password, ...timestamp };
-
+  const data = { e_mail, full_name, password };
   const returningData = await table()
     .returning("id_user")
     .insert(data);

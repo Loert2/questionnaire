@@ -15,13 +15,13 @@ import {
   UserChangePasswordField
 } from "./user";
 
-import { TestField } from "./test";
+import { TicketField } from "./test";
 
 const query = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
     user: UserField,
-    test: TestField,
+    ticket: TicketField,
     node: nodeField
   })
 });
