@@ -1,22 +1,12 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLInputObjectType
-} from "graphql";
-
-import {
-  getTestById,
-  getTicketById,
-  getQuestionsByTicketId,
-  getAnswersByQuestionId
-} from "../database/db-test";
+import { GraphQLObjectType, GraphQLString } from "graphql";
 
 import { nodeInterface } from "./node";
 
-import { createMutation, createPayload } from "./utilities";
+import { globalIdField } from "graphql-relay";
 
-import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
+import { getTestById } from "../database/db-test";
+
+import { TicketField } from "./ticket";
 
 // === === === === === === QUERY TEST === === === === === ===
 
@@ -35,72 +25,7 @@ export const TestType = new GraphQLObjectType({
 
 export const TestField = {
   type: TestType,
-  resolve: async (obj, args, context) => {
-    return await getTestById(id_test);
-  }
-};
-
-// === === === === === === QUERY TICKET === === === === === ===
-
-export const TicketType = new GraphQLObjectType({
-  name: "Ticket",
-  interfaces: [nodeInterface],
-  fields: () => ({
-    id: globalIdField(),
-    number_of_questions: {
-      name: "Number_of_questions",
-      type: GraphQLInt
-    },
-    question: QuestionField
-  })
-});
-
-export const TicketField = {
-  type: TicketType,
-  resolve: async (obj, args, context) => {
-    return await getTicketById(id_ticket);
-  }
-};
-
-// === === === === === === QUERY QUESTION === === === === === ===
-
-export const QuestionType = new GraphQLObjectType({
-  name: "Question",
-  interfaces: [nodeInterface],
-  fields: () => ({
-    id: globalIdField(),
-    name: {
-      name: "Name",
-      type: GraphQLString
-    },
-    answer: AnswerField
-  })
-});
-
-export const QuestionField = {
-  type: QuestionType,
-  resolve: async (obj, args, context) => {
-    return await getQuestionsById(id_question);
-  }
-};
-
-// === === === === === === QUERY ANSWER === === === === === ===
-
-export const AnswerType = new GraphQLObjectType({
-  name: "Answer",
-  interfaces: [nodeInterface],
-  fields: () => ({
-    id: globalIdField(),
-    name: {
-      name: "Name",
-      type: GraphQLString
-    }
-  })
-});
-
-export const AnswerField = {
-  type: AnswerType,
-  resolve: async (obj, args, context) => {
-    return await getAnswersById(id_answer);
+  resolve: async (obj, args, context, root) => {
+    return await getTestById(args.id);
   }
 };
