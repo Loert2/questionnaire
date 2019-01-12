@@ -44,7 +44,6 @@ export const UserField = {
   type: UserType,
   resolve: async (obj, args, context) => {
     return await getUserById(context.userId);
-    console.log(obj.userId, args.userId, context.userId);
   }
 };
 

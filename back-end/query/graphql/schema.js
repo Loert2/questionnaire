@@ -17,6 +17,7 @@ import {
 
 import { TestField } from "./test";
 import { TicketField } from "./ticket";
+import { QuestionField } from "./question";
 
 const query = new GraphQLObjectType({
   name: "Query",
@@ -24,6 +25,7 @@ const query = new GraphQLObjectType({
     user: UserField,
     test: TestField,
     ticket: TicketField,
+    question: QuestionField,
     node: nodeField
   })
 });

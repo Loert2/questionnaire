@@ -51,11 +51,10 @@ export const createMutation = config => ({
   }
 });
 
-//TO-DO ошибка
 const generateConnectionType = nodeType => {
   const { connectionType } = connectionDefinitions({ nodeType });
-  const getConnectionFields = connectionType._typeConfig.fields;
-  connectionType._typeConfig.fields = () => ({
+  const getConnectionFields = connectionType.fields;
+  connectionType.fields = () => ({
     ...getConnectionFields(),
     total: { type: nonNull(GraphQLInt), description: "Total amount of nodes" }
   });

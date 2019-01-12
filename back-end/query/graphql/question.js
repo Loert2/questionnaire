@@ -26,6 +26,7 @@ export const QuestionType = new GraphQLObjectType({
 export const QuestionField = {
   type: QuestionType,
   resolve: async (obj, args, context, root) => {
-    return await getQuestionById(root.id);
+    console.log(args.id);
+    return await getQuestionById(args.id);
   }
 };

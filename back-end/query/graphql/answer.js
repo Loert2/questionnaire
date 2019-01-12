@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from "graphql";
 
-import { getAnswerById, getAnswerListById } from "../database/db-test";
+import { getAnswerById, getAnswerList } from "../database/db-test";
 
 import { nodeInterface } from "./node";
 
@@ -25,7 +25,7 @@ export const AnswerType = new GraphQLObjectType({
 export const AnswerField = {
   type: AnswerType,
   resolve: async (obj, args, context, root) => {
-    const data = await getAnswerById(root.id);
+    const data = await getAnswerById(root.id_answer);
     console.log(data);
     return data;
   }
@@ -34,7 +34,7 @@ export const AnswerField = {
 export const AnswerConnection = createConnection({
   field: AnswerField,
   resolveIdsList: async (obj, args, context) => {
-    const questionId = obj.id;
-    return await getAnswersIdsList({ questionId });
+    console.log(obj.id_question);
+    return await getAnswerList(obj.id_question);
   }
 });
