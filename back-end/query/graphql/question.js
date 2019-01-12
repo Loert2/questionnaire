@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 
-import { getQuestionById } from "../database/db-test";
+import { getQuestionByIdTicketAndNumber } from "../database/db-test";
 
 import { nodeInterface } from "./node";
 
@@ -25,8 +25,10 @@ export const QuestionType = new GraphQLObjectType({
 
 export const QuestionField = {
   type: QuestionType,
-  args: { id: { type: GraphQLInt } },
+  args: { id: { type: GraphQLInt }, number: { type: GraphQLInt } },
   resolve: async (obj, args, context) => {
-    return await getQuestionById(args.id);
+    const id = args.id;
+    const number = args.number;
+    return await getQuestionByIdTicketAndNumber({ id, number });
   }
 };
