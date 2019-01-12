@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 
 import { nodeInterface } from "./node";
 
@@ -25,7 +25,8 @@ export const TestType = new GraphQLObjectType({
 
 export const TestField = {
   type: TestType,
-  resolve: async (obj, args, context, root) => {
+  args: { id: { type: GraphQLInt } },
+  resolve: async (obj, args, context) => {
     return await getTestById(args.id);
   }
 };

@@ -43,6 +43,7 @@ CREATE TABLE "ticket" (
 CREATE TABLE "question" (
   "id_question" SERIAL PRIMARY KEY,
   "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
+  "number_question" INTEGER NOT NULL,
   "name" VARCHAR(255) NOT NULL
 );
 

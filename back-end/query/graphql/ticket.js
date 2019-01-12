@@ -25,7 +25,8 @@ export const TicketType = new GraphQLObjectType({
 
 export const TicketField = {
   type: TicketType,
-  resolve: async (obj, args, context, root) => {
-    return await getTicketById(obj.id_ticket);
+  args: { id: { type: GraphQLInt } },
+  resolve: async (obj, args, context) => {
+    return await getTicketById(args.id);
   }
 };

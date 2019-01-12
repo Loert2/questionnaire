@@ -16,14 +16,14 @@ export const getAnswerById = async id => {
   return dataExists(data) ? { id, ...data[0] } : null;
 };
 export const getQuestionById = async id => {
-  const data = await questionTable().where("id_question", 2);
+  const data = await questionTable().where("number_question", id);
   return dataExists(data) ? { id, ...data[0] } : null;
 };
 export const getTicketById = async id => {
-  const data = await ticketTable().where("id_ticket", 2);
+  const data = await ticketTable().where("id_ticket", id);
   return dataExists(data) ? { id, ...data[0] } : null;
 };
 export const getTestById = async id => {
-  const data = await testTable().where("id_test", 1);
+  const data = await testTable().where("id_test", id);
   return dataExists(data) ? { id, ...data[0] } : null;
 };

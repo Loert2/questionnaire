@@ -34,7 +34,6 @@ export const AnswerField = {
 export const AnswerConnection = createConnection({
   field: AnswerField,
   resolveIdsList: async (obj, args, context) => {
-    console.log(obj.id_question);
     return await getAnswerList(obj.id_question);
   }
 });
