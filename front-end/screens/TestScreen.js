@@ -19,20 +19,6 @@ class TestScreen extends Component {
     this.goPrevious = this.goPrevious.bind(this);
   }
 
-  componentDidMount() {
-    const { step } = this.state;
-    console.log(11);
-    // const questions =
-    //   this.props.data &&
-    //   this.props.data.ticket &&
-    //   this.props.data.ticket.question;
-    // this.setState(
-    //   update(this.state, {
-    //     question: { $set: questions }
-    //   })
-    // );
-  }
-
   _handleChecked = ({ id_answer, checked }) => {
     if (this.state.id === undefined) {
       this.setState(
@@ -82,17 +68,10 @@ class TestScreen extends Component {
   }
 
   render() {
-    console.log("state", this.state);
-    console.log("data", this.props.data);
-    const { step, question } = this.state;
+    const { step } = this.state;
     return (
       <View>
-        <QuestionForm
-          step={step}
-          question={question}
-          answer={question.answer}
-          handleChecked={this._handleChecked}
-        />
+        <QuestionForm step={step} handleChecked={this._handleChecked} />
         <Actions
           step={step}
           lastStep={11}
@@ -105,26 +84,4 @@ class TestScreen extends Component {
   }
 }
 
-const TICKET = gql`
-  query Ticket($id_ticket: Int!, $number: Int!) {
-    ticket(id: $id_ticket) {
-      question(id: $id_ticket, number: $number) {
-        name
-        answer {
-          edges {
-            node {
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-const ticket = graphql(TICKET, {
-  options: () => ({
-    variables: { id_ticket: 1, number: 1 }
-  })
-});
-
-export default compose(ticket)(TestScreen);
+export default TestScreen;

@@ -7,27 +7,52 @@ import {
   View
 } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { graphql, compose } from "react-apollo";
+import gql from "graphql-tag";
+import update from "immutability-helper";
 
 class QuestionForm extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     question: {}
+  //   };
+  // }
+  // componentDidMount() {
+  //   const { step } = this.props;
+  //   const questions =
+  //     this.props.data &&
+  //     this.props.data.ticket &&
+  //     this.props.data.ticket.question;
+  //   this.setState({ question: questions });
+  // }
   render() {
+    //  console.log("state", this.state);
+    console.log("data", this.props.data);
+    const question =
+      this.props.data &&
+      this.props.data.ticket &&
+      this.props.data.ticket.question;
     return (
       <View style={styles.container}>
         <Text style={styles.text}>
-          Вопрос {this.props.step}: {this.props.question.name}
+          Вопрос {this.props.step}: {question && question.name}
         </Text>
-        {this.props.answer &&
-          this.props.answer.map(el => (
+        {question &&
+          question.answer &&
+          question.answer.edges &&
+          question.answer.edges.map(el => (
             <View>
               <CheckBox
-                key={el.id_answer + el.name}
-                title={el.name}
+                key={el.node.id}
+                title={el.node.name}
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
                 checkedColor="#ffff4f"
-                checked={el.checked}
+                checked={false}
                 onPress={checked =>
                   this.props.handleChecked({
-                    id_answer: el.id_answer,
+                    id_answer: el.node.id_answer,
                     checked: !el.checked
                   })
                 }
@@ -41,7 +66,31 @@ class QuestionForm extends Component {
     );
   }
 }
-export default QuestionForm;
+
+const TICKET = gql`
+  query Ticket($id_ticket: Int!, $number: Int!) {
+    ticket(id: $id_ticket) {
+      question(id: $id_ticket, number: $number) {
+        name
+        answer {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+const ticket = graphql(TICKET, {
+  options: ({ step }) => ({
+    variables: { id_ticket: 2, number: step }
+  })
+});
+
+export default compose(ticket)(QuestionForm);
 
 const styles = StyleSheet.create({
   container: {
