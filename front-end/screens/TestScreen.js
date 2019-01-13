@@ -12,35 +12,27 @@ class TestScreen extends Component {
     this.state = {
       step: 1,
       question: {
-        name:
-          'На какие электроустановки распространяются "правила технической эксплуатации электроустановок потребителей"?',
-        answer: [
-          {
-            id_answer: 0,
-            name: "Напряжением до 500 кВ включительно",
-            checked: false
-          },
-          {
-            id_answer: 1,
-            name: "Напряжением до 350 кВ включительно",
-            checked: false
-          },
-          {
-            id_answer: 2,
-            name: "Напряжением до 220 кВ включительно",
-            checked: false
-          },
-          {
-            id_answer: 3,
-            name: "Напряжением до 110 кВ включительно",
-            checked: false
-          }
-        ]
+        answer: []
       }
     };
     this.goNext = this.goNext.bind(this);
     this.goPrevious = this.goPrevious.bind(this);
   }
+
+  componentDidMount() {
+    const { step } = this.state;
+    console.log(11);
+    // const questions =
+    //   this.props.data &&
+    //   this.props.data.ticket &&
+    //   this.props.data.ticket.question;
+    // this.setState(
+    //   update(this.state, {
+    //     question: { $set: questions }
+    //   })
+    // );
+  }
+
   _handleChecked = ({ id_answer, checked }) => {
     if (this.state.id === undefined) {
       this.setState(
@@ -73,10 +65,8 @@ class TestScreen extends Component {
     switch (step) {
       case 1:
         console.log("1");
-        break;
       case 2:
         console.log("2");
-        break;
     }
 
     this.setState(update(this.state, { step: { $set: step + 1 } }));
@@ -92,6 +82,8 @@ class TestScreen extends Component {
   }
 
   render() {
+    console.log("state", this.state);
+    console.log("data", this.props.data);
     const { step, question } = this.state;
     return (
       <View>
@@ -112,4 +104,27 @@ class TestScreen extends Component {
     );
   }
 }
-export default TestScreen;
+
+const TICKET = gql`
+  query Ticket($id_ticket: Int!, $number: Int!) {
+    ticket(id: $id_ticket) {
+      question(id: $id_ticket, number: $number) {
+        name
+        answer {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+const ticket = graphql(TICKET, {
+  options: () => ({
+    variables: { id_ticket: 1, number: 1 }
+  })
+});
+
+export default compose(ticket)(TestScreen);

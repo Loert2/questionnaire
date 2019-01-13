@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import TestScreen from "./TestScreen";
 
 class AuthorisationScreen extends Component {
   state = {};
@@ -25,7 +24,7 @@ class AuthorisationScreen extends Component {
     this.props.update({ e_mail, password }).then(res => {
       if (res.data.UserSignIn.error === null) {
         this.setState({ error: "" });
-        this.context.history.push("/TestScreen");
+        this.props.navigation.push("Test");
       } else {
         this.setState({ error: "Неправильный логин или пароль" });
       }

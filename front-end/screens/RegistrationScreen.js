@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import TestScreen from "./TestScreen";
 
 class RegistrationScreen extends Component {
   state = {};
@@ -40,7 +39,7 @@ class RegistrationScreen extends Component {
     if (password === confirmPassword) {
       this.props.update({ e_mail, full_name, password }).then(res => {});
       this.setState({ error: "" });
-      this.props.navigation.navigate("Test");
+      this.props.navigation.push("Test");
     } else {
       this.setState({ error: "Пароли не совпадают" });
     }

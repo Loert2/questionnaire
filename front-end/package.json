@@ -1,5 +1,5 @@
 {
-  "name": "my-new-project",
+  "name": "questionnaire",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
@@ -26,6 +26,7 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "babel-plugin-graphql-tag": "^1.6.0",
     "babel-preset-expo": "^5.0.0"
   }
 }

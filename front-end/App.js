@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
 });
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: "http://localhost:5000", credentials: "include" }),
+  link: new HttpLink({ uri: "http://10.0.2.2:5000", credentials: "include" }),
   cache: new InMemoryCache()
 });
