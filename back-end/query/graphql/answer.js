@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 
 import { getAnswerById, getAnswerList } from "../database/db-test";
 
@@ -15,6 +15,10 @@ export const AnswerType = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     id: globalIdField(),
+    id_answer: {
+      name: "Id_answer",
+      type: GraphQLInt
+    },
     name: {
       name: "Name",
       type: GraphQLString

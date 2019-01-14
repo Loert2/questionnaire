@@ -24,8 +24,8 @@ CREATE TABLE "result" (
 CREATE TABLE "answer_user" (
   "id_anwer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
-  "id_question" INTEGER NOT NULL REFERENCES "question" ("id_question"),
-  "is_valid" BOOLEAN NOT NULL
+  "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
+  "id_answer" INTEGER NOT NULL REFERENCES "answer" ("id_answer")
 );
 
 CREATE TABLE "test" (

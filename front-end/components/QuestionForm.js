@@ -12,27 +12,9 @@ import gql from "graphql-tag";
 import update from "immutability-helper";
 
 class QuestionForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     question: {}
-  //   };
-  // }
-  // componentDidMount() {
-  //   const { step } = this.props;
-  //   const questions =
-  //     this.props.data &&
-  //     this.props.data.ticket &&
-  //     this.props.data.ticket.question;
-  //   this.setState({ question: questions });
-  // }
   render() {
-    //  console.log("state", this.state);
-    console.log("data", this.props.data);
-    const question =
-      this.props.data &&
-      this.props.data.ticket &&
-      this.props.data.ticket.question;
+    const { data, answer } = this.props;
+    const question = data && data.ticket && data.ticket.question;
     return (
       <View style={styles.container}>
         <Text style={styles.text}>
@@ -49,19 +31,15 @@ class QuestionForm extends Component {
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
                 checkedColor="#ffff4f"
-                checked={false}
+                checked={el.node.id_answer === answer ? true : false}
                 onPress={checked =>
                   this.props.handleChecked({
-                    id_answer: el.node.id_answer,
-                    checked: !el.checked
+                    id_answer: el.node.id_answer
                   })
                 }
               />
             </View>
           ))}
-        {this.props.error !== 0 && (
-          <Text style={styles.error}>{this.props.error}</Text>
-        )}
       </View>
     );
   }
@@ -75,7 +53,7 @@ const TICKET = gql`
         answer {
           edges {
             node {
-              id
+              id_answer
               name
             }
           }

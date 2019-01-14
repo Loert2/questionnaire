@@ -11,39 +11,18 @@ class TestScreen extends Component {
     super(props);
     this.state = {
       step: 1,
-      question: {
-        answer: []
+      answer: {
+        id_answer: null
       }
     };
     this.goNext = this.goNext.bind(this);
     this.goPrevious = this.goPrevious.bind(this);
   }
 
-  _handleChecked = ({ id_answer, checked }) => {
-    if (this.state.id === undefined) {
-      this.setState(
-        update(this.state, {
-          question: { answer: { [id_answer]: { checked: { $set: checked } } } },
-          id: { $set: id_answer }
-        })
-      );
-    } else {
-      this.setState(
-        update(this.state, {
-          question: {
-            answer: {
-              [id_answer]: { checked: { $set: checked } },
-              [this.state.id]: {
-                checked: {
-                  $set: false
-                }
-              }
-            }
-          },
-          id: { $set: id_answer }
-        })
-      );
-    }
+  _handleChecked = ({ id_answer }) => {
+    this.setState({
+      answer: { id_answer }
+    });
   };
 
   goNext() {
@@ -68,10 +47,14 @@ class TestScreen extends Component {
   }
 
   render() {
-    const { step } = this.state;
+    const { step, answer } = this.state;
     return (
       <View>
-        <QuestionForm step={step} handleChecked={this._handleChecked} />
+        <QuestionForm
+          step={step}
+          answer={answer.id_answer}
+          handleChecked={this._handleChecked}
+        />
         <Actions
           step={step}
           lastStep={11}
