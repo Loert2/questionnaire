@@ -16,12 +16,15 @@ import {
 } from "./user";
 
 import { TicketField } from "./ticket";
+import { AddAnswerUserField } from "./answerUser";
+import { ResultConnection, CountingResultField } from "./result";
 
 const query = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
     user: UserField,
     ticket: TicketField,
+    result: ResultConnection,
     node: nodeField
   })
 });
@@ -32,7 +35,9 @@ const mutation = new GraphQLObjectType({
     UserSignIn: UserSignInField,
     UserSignUp: UserSignUpField,
     UserSignOut: UserSignOutField,
-    UserChangePassword: UserChangePasswordField
+    UserChangePassword: UserChangePasswordField,
+    AddAnswerUser: AddAnswerUserField,
+    CountingResult: CountingResultField
   })
 });
 

@@ -10,11 +10,11 @@ const dataExists = data => data && data[0];
 export const getAnswerList = async id => {
   return await answerTable().where("id_question", id);
 };
-
 export const getAnswerById = async id => {
   const data = await answerTable().where("id_answer", id);
   return dataExists(data) ? { id, ...data[0] } : null;
 };
+
 export const getQuestionByIdTicketAndNumber = async ({ id, number }) => {
   const data = await questionTable().where({
     id_ticket: id,
@@ -29,4 +29,11 @@ export const getTicketById = async id => {
 export const getTestById = async id => {
   const data = await testTable().where("id_test", id);
   return dataExists(data) ? { id, ...data[0] } : null;
+};
+
+export const getAnswerValidById = async id => {
+  const data = await answerTable()
+    .where("id_answer", id)
+    .select("is_valid");
+  return dataExists(data) ? { ...data[0] } : null;
 };

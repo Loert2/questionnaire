@@ -66,11 +66,11 @@ export const createConnection = config => ({
   args: connectionArgs,
   resolve: async (object, args, context) => {
     const ids = await config.resolveIdsList(object, args, context);
-    const answers = ids.map(item =>
+    const res = ids.map(item =>
       config.field.resolve(object, args, context, item)
     );
 
-    return { ...connectionFromArray(answers, args), total: answers.length };
+    return { ...connectionFromArray(res, args), total: res.length };
   }
 });
 

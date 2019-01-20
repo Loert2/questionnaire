@@ -35,7 +35,6 @@ export const UserType = new GraphQLObjectType({
       name: "e_mail",
       type: GraphQLString
     }
-    //    AnswerUser: AnswerUserConnection,
     //    Result: ResultConnection
   })
 });

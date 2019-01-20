@@ -18,14 +18,15 @@ CREATE TABLE "result" (
   "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
   "point" INTEGER NOT NULL,
+  "result" INTEGER NOT NULL,
   "data" timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE "answer_user" (
-  "id_anwer_user" SERIAL PRIMARY KEY,
+  "id_answer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
   "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
-  "id_answer" INTEGER NOT NULL REFERENCES "answer" ("id_answer")
+  "correct" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "test" (

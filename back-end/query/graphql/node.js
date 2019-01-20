@@ -4,9 +4,11 @@ import { getUserById } from "../database/db-user";
 import {
   getTestById,
   getTicketById,
-  getQuestionsByTicketId,
-  getAnswersByQuestionId
+  getQuestionByIdTicketAndNumber,
+  getAnswerById
 } from "../database/db-test";
+import { getAnswerUserById } from "../database/db-answer_user";
+import { getResultById } from "../database/db-result";
 
 const { nodeInterface, nodeField } = nodeDefinitions(
   async (globalId, context) => {
@@ -27,15 +29,23 @@ const { nodeInterface, nodeField } = nodeDefinitions(
       case "Ticket":
         const Ticket = await getTicketById(id);
         if (!Ticket) return null;
-        return { ...Ticket, _type: require("./test").TicketType };
+        return { ...Ticket, _type: require("./ticket").TicketType };
       case "Question":
-        const Question = await getQuestionsById(id);
+        const Question = await getQuestionByIdTicketAndNumber(id);
         if (!Question) return null;
-        return { ...Question, _type: require("./test").QuestionType };
+        return { ...Question, _type: require("./question").QuestionType };
       case "Answer":
-        const Answer = await getAnswersById(id);
+        const Answer = await getAnswerById(id);
         if (!Answer) return null;
-        return { ...Answer, _type: require("./test").AnswerType };
+        return { ...Answer, _type: require("./answer").AnswerType };
+      case "AnswerUser":
+        const AnswerUser = await getAnswerUserById(id);
+        if (!AnswerUser) return null;
+        return { ...AnswerUser, _type: require("./answerUser").AnswerUserType };
+      case "Result":
+        const Result = await getResultById(id);
+        if (!Result) return null;
+        return { ...Result, _type: require("./result").ResultType };
       default:
         return null;
     }

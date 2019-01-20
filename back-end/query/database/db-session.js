@@ -20,7 +20,6 @@ const getUserId = async sessionId => {
 
 const setUserId = async (sessionId, userId) => {
   const oldUserId = await resolveSessionId(sessionId);
-  const newData = { id_user: userId, updated_at: new Date() };
 
   const data = { id_user: userId, updated_at: new Date() };
   if (oldUserId) {
