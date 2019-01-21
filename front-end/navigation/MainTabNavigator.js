@@ -10,12 +10,14 @@ import HomeScreen from "../screens/HomeScreen";
 import AuthorizationScreen from "../screens/AuthorizationScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import TestScreen from "../screens/TestScreen";
+import ResultScreen from "../screens/ResultScreen";
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
   Authorization: { screen: AuthorizationScreen },
   Registration: { screen: RegistrationScreen },
-  Test: { screen: TestScreen }
+  Test: { screen: TestScreen },
+  Result: { screen: ResultScreen }
 });
 
 HomeStack.navigationOptions = {
@@ -51,8 +53,24 @@ RegistrationStack.navigationOptions = {
   )
 };
 
-export default createBottomTabNavigator({
+const ResultStack = createStackNavigator({
+  Results: ResultScreen
+});
+
+ResultStack.navigationOptions = {
+  tabBarLabel: ({ focused }) => (
+    <TabBarText focused={focused} name={"Результаты"} />
+  ),
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={"md-clipboard"} />
+  )
+};
+
+const ButtomHome = createBottomTabNavigator({
   HomeStack,
   AuthorizationStack,
-  RegistrationStack
+  RegistrationStack,
+  ResultStack
 });
+
+export default ButtomHome;

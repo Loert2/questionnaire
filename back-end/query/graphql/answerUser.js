@@ -34,6 +34,10 @@ export const AnswerUserType = new GraphQLObjectType({
       name: "Id_ticket",
       type: GraphQLInt
     },
+    id_answer: {
+      name: "Id_answer",
+      type: GraphQLInt
+    },
     correct: {
       name: "correct",
       type: GraphQLBoolean
@@ -57,6 +61,7 @@ export const AnswerUserConnection = createConnection({
 
 // === === === === === === MUTATIONS === === === === === ===
 
+//TO-DO не возвращает результат
 const answerUserMutationPayload = createPayload({
   name: "AnswerUserMutationPayload",
   fields: () => ({
@@ -85,6 +90,7 @@ const answerUserResolve = async (obj, args, context) => {
   const id_answer_user = await addAnswerUser({
     id_user,
     id_ticket,
+    id_answer,
     correct
   });
   const userAnswer = await getAnswerUserById(id_answer_user);

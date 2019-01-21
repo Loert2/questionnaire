@@ -1,15 +1,7 @@
-import React from "react";
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
-import { WebBrowser } from "expo";
+import React, { Component } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends Component {
   static navigationOptions = {
     header: null
   };

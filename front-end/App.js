@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { AppLoading, Asset, Font, Icon } from "expo";
+import { AppLoading, Font } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { HttpLink, InMemoryCache } from "apollo-client-preset";
 import { ApolloClient } from "apollo-client";
 import { ApolloProvider } from "react-apollo";
 
-export default class App extends React.Component {
+class App extends Component {
   state = {
     isLoadingComplete: false
   };
@@ -46,7 +46,7 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
-
+export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

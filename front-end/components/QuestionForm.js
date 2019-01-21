@@ -63,8 +63,8 @@ const TICKET = gql`
   }
 `;
 const ticket = graphql(TICKET, {
-  options: ({ step }) => ({
-    variables: { id_ticket: 2, number: step }
+  options: ({ id_ticket, step }) => ({
+    variables: { id_ticket, number: step }
   })
 });
 

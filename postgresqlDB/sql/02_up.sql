@@ -26,6 +26,7 @@ CREATE TABLE "answer_user" (
   "id_answer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
   "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
+  "id_answer" INTEGER NOT NULL REFERENCES "answer" ("id_answer"),
   "correct" BOOLEAN NOT NULL
 );
 

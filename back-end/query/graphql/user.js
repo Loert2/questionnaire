@@ -1,7 +1,8 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLInt
 } from "graphql";
 
 import {
@@ -17,9 +18,6 @@ import { createMutation, createPayload } from "./utilities";
 
 import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
 
-//import { AnswerUserConnection } from "./answerUser";
-//import { ResultConnection } from "./result";
-
 // === === === === === === QUERY === === === === === ===
 
 export const UserType = new GraphQLObjectType({
@@ -27,6 +25,10 @@ export const UserType = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     id: globalIdField(),
+    id_user: {
+      name: "id_user",
+      type: GraphQLInt
+    },
     full_name: {
       name: "full_name",
       type: GraphQLString
@@ -35,7 +37,6 @@ export const UserType = new GraphQLObjectType({
       name: "e_mail",
       type: GraphQLString
     }
-    //    Result: ResultConnection
   })
 });
 

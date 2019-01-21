@@ -36,10 +36,11 @@ class RegistrationScreen extends Component {
   ];
 
   _handleRegSubmit = ({ e_mail, full_name, password, confirmPassword }) => {
+    console.log(this.props);
     if (password === confirmPassword) {
       this.props.update({ e_mail, full_name, password }).then(res => {});
-      this.setState({ error: "" });
       this.props.navigation.push("Test");
+      this.setState({ error: "" });
     } else {
       this.setState({ error: "Пароли не совпадают" });
     }
