@@ -7,6 +7,7 @@ import {
 
 import {
   getUserById,
+  getUserNameById,
   getUserByE_mail,
   addUser,
   changePassword
@@ -17,6 +18,8 @@ import { nodeInterface } from "./node";
 import { createMutation, createPayload } from "./utilities";
 
 import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
+
+import { ResultConnection } from "./result";
 
 // === === === === === === QUERY === === === === === ===
 
@@ -36,7 +39,8 @@ export const UserType = new GraphQLObjectType({
     e_mail: {
       name: "e_mail",
       type: GraphQLString
-    }
+    },
+    result: ResultConnection
   })
 });
 
@@ -44,6 +48,13 @@ export const UserField = {
   type: UserType,
   resolve: async (obj, args, context) => {
     return await getUserById(context.userId);
+  }
+};
+
+export const UserName = {
+  type: UserType,
+  resolve: async (obj, args, context) => {
+    return await getUserNameById(obj.id_user);
   }
 };
 

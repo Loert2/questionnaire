@@ -19,7 +19,7 @@ CREATE TABLE "result" (
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
   "point" INTEGER NOT NULL,
   "result" INTEGER NOT NULL,
-  "data" timestamptz NOT NULL DEFAULT now()
+  "date" timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE "answer_user" (
@@ -38,7 +38,8 @@ CREATE TABLE "test" (
 
 CREATE TABLE "ticket" (
   "id_ticket" SERIAL PRIMARY KEY,
-  "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),
+  "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),  
+  "number_ticket" INTEGER NOT NULL,
   "number_of_question" INTEGER NOT NULL
 );
 

@@ -1,7 +1,7 @@
 INSERT INTO test (name, number_of_attempts) VALUES ('Тест по электробезопасности', 1);
 
 /*TO-DO: 3 билета из 30*/
-INSERT INTO ticket (id_test, number_of_question) VALUES (1,11),(1,11),(1,11);
+INSERT INTO ticket (id_test, number_ticket, number_of_question) VALUES (1,1,11),(1,2,11),(1,3,11);
 
 /*Сбилась нумерация: причина неизвестна*/
 INSERT INTO question (id_ticket, number_question, name) VALUES

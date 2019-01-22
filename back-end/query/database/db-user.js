@@ -11,6 +11,11 @@ export const getUserById = async id_user => {
   return dataExists(data) ? { id_user, ...data[0] } : null;
 };
 
+export const getUserNameById = async id_user => {
+  const data = await rawByField("id_user", id_user).select("full_name");
+  return dataExists(data) ? { ...data[0] } : null;
+};
+
 export const getUserByE_mail = async e_mail => {
   const fields = ["id_user", "full_name", "password"];
   const data = await rawByField("e_mail", e_mail).select(...fields);

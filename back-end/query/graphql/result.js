@@ -1,4 +1,5 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
+import GraphQLDate from "graphql-date";
 
 import { getAnswerUserList } from "../database/db-answer_user";
 import { getResultList, addResult, getResultById } from "../database/db-result";
@@ -8,6 +9,8 @@ import { nodeInterface } from "./node";
 import { globalIdField } from "graphql-relay";
 
 import { createConnection, createMutation, createPayload } from "./utilities";
+
+import { UserName } from "./user";
 
 // === === === === === === QUERY ANSWER === === === === === ===
 
@@ -31,7 +34,12 @@ export const ResultType = new GraphQLObjectType({
     result: {
       name: "Result",
       type: GraphQLInt
-    }
+    },
+    date: {
+      name: "Date",
+      type: GraphQLDate
+    },
+    user: UserName
   })
 });
 
@@ -80,7 +88,11 @@ const resultResolve = async (obj, args, context) => {
       point = point + 1;
     }
   });
-  const result = Math.round((point / 11) * 100);
+  if (point !== 0) {
+    var result = Math.round((point / 11) * 100);
+  } else {
+    var result = 0;
+  }
   const id_result = await addResult({
     id_test,
     id_user,

@@ -5,9 +5,6 @@ import gql from "graphql-tag";
 
 class RegistrationScreen extends Component {
   state = {};
-  static navigationOptions = {
-    header: null
-  };
   fileds = [
     {
       name: "full_name",
@@ -36,10 +33,10 @@ class RegistrationScreen extends Component {
   ];
 
   _handleRegSubmit = ({ e_mail, full_name, password, confirmPassword }) => {
-    console.log(this.props);
     if (password === confirmPassword) {
-      this.props.update({ e_mail, full_name, password }).then(res => {});
-      this.props.navigation.push("Test");
+      this.props.reg({ e_mail, full_name, password }).then(res => {
+        this.props.navigation.push("Test");
+      });
       this.setState({ error: "" });
     } else {
       this.setState({ error: "Пароли не совпадают" });
@@ -68,7 +65,7 @@ const SIGN_UP_MUTATION = gql`
 
 const up = graphql(SIGN_UP_MUTATION, {
   props: ({ mutate }) => ({
-    update: inputUp => mutate({ variables: { inputUp } })
+    reg: inputUp => mutate({ variables: { inputUp } })
   })
 });
 export default compose(up)(RegistrationScreen);

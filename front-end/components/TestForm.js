@@ -18,6 +18,7 @@ class TestForm extends Component {
     };
     this.goNext = this.goNext.bind(this);
     this.goPrevious = this.goPrevious.bind(this);
+    this.submitBtn = this.submitBtn.bind(this);
   }
 
   _handleChecked = ({ id_answer }) => {
@@ -26,21 +27,25 @@ class TestForm extends Component {
     });
   };
 
+  //TO-DO отладить payload
   goNext() {
-    const { step } = this.state;
+    const {
+      step,
+      answer: { id_answer }
+    } = this.state;
     const { id_user, id_ticket, addAns } = this.props;
     addAns({
       id_user,
       id_ticket,
-      id_answer: step
+      id_answer
     }).then(res => {
-      this.setState(
-        update(this.state, {
-          answer_user: {
-            $push: [{ res: { answer_user } }]
-          }
-        })
-      );
+      // this.setState(
+      //   update(this.state, {
+      //     answer_user: {
+      //       $push: [{ res: { answer_user } }]
+      //     }
+      //   })
+      // );
     });
     this.setState(update(this.state, { step: { $set: step + 1 } }));
   }
@@ -60,20 +65,25 @@ class TestForm extends Component {
     // );
   }
 
-  submitBtn() {
-    const { id_user, id_ticket, addRes, endBtn } = this.props;
-    addRes({
+  async submitBtn() {
+    const {
+      answer: { id_answer }
+    } = this.state;
+    const { id_user, id_ticket, addAns, addRes, endBtn } = this.props;
+    console.log("addRes", this.props);
+    await addAns({
+      id_user,
+      id_ticket,
+      id_answer
+    });
+    await addRes({
       id_test: 1,
       id_user,
       id_ticket
-    }).then(res => {
-      endBtn;
-      this.props.navigation.push("Home");
-    });
+    }).then(res => endBtn());
   }
 
   render() {
-    console.log("props", this.props);
     const { step, answer } = this.state;
     const { id_ticket } = this.props;
     return (

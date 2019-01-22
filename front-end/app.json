@@ -1,8 +1,7 @@
 {
   "expo": {
-    "name": "web",
-    "description": "Electrical safety test",
-    "slug": "web",
+    "name": "questionnaire",
+    "slug": "questionnaire",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],

@@ -13,11 +13,10 @@ import TestScreen from "../screens/TestScreen";
 import ResultScreen from "../screens/ResultScreen";
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen },
-  Authorization: { screen: AuthorizationScreen },
-  Registration: { screen: RegistrationScreen },
-  Test: { screen: TestScreen },
-  Result: { screen: ResultScreen }
+  Home: HomeScreen,
+  Authorization: AuthorizationScreen,
+  Registration: RegistrationScreen,
+  Test: TestScreen
 });
 
 HomeStack.navigationOptions = {
@@ -25,32 +24,6 @@ HomeStack.navigationOptions = {
     <TabBarText focused={focused} name={"Главная"} />
   ),
   tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"md-home"} />
-};
-
-const AuthorizationStack = createStackNavigator({
-  Authorizations: AuthorizationScreen
-});
-
-AuthorizationStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <TabBarText focused={focused} name={"Авторизация"} />
-  ),
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"md-log-in"} />
-  )
-};
-
-const RegistrationStack = createStackNavigator({
-  Registrations: RegistrationScreen
-});
-
-RegistrationStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <TabBarText focused={focused} name={"Регистрация"} />
-  ),
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"md-arrow-up"} />
-  )
 };
 
 const ResultStack = createStackNavigator({
@@ -68,8 +41,6 @@ ResultStack.navigationOptions = {
 
 const ButtomHome = createBottomTabNavigator({
   HomeStack,
-  AuthorizationStack,
-  RegistrationStack,
   ResultStack
 });
 

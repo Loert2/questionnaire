@@ -56,10 +56,9 @@ class TestScreen extends Component {
   }
 
   render() {
-    console.log("state", this.state);
     const { id_ticket } = this.state;
-    const id_user =
-      this.props.data && this.props.data.user && this.props.data.user.id;
+    const { navigation, data } = this.props;
+    const id_user = data && data.user && data.user.id_user;
     const { startBtn, buttonText } = styles;
     return (
       <View>
@@ -87,6 +86,8 @@ const USER = gql`
   }
 `;
 
+const user = graphql(USER);
+
 const SIGN_OUT_MUTATION = gql`
   mutation SignOut($inputOut: UserSignOutInput!) {
     UserSignOut(input: $inputOut) {
@@ -100,8 +101,6 @@ const out = graphql(SIGN_OUT_MUTATION, {
   })
 });
 
-const user = graphql(USER);
-
 export default compose(
   user,
   out
@@ -112,10 +111,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: "#ffff4f",
     marginTop: 120,
-    marginLeft: 105,
-    marginRight: 105,
+    marginLeft: 100,
+    marginRight: 100,
     padding: 50,
-    borderRadius: 150
+    borderRadius: 160
   },
   buttonText: {
     color: "#000000",
@@ -126,9 +125,9 @@ const styles = StyleSheet.create({
   },
   exitBtn: {
     flexGrow: 1,
-    backgroundColor: "#ffff4f",
-    paddingTop: 9,
-    paddingBottom: 9,
+    backgroundColor: "#fff",
+    paddingTop: 8,
+    paddingBottom: 8,
     paddingLeft: 24,
     paddingRight: 24
   },

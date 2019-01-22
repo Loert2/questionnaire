@@ -14,7 +14,7 @@ export const getResultById = async id => {
 };
 
 export const addResult = async ({ id_test, id_user, point, result }) => {
-  const data = { id_user, id_test, point, result, data: new Date() };
+  const data = { id_user, id_test, point, result, date: new Date() };
   const returningData = await resultTable()
     .returning("id_result")
     .insert(data);
