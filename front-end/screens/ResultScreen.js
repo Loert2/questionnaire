@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import update from "immutability-helper";
@@ -9,6 +9,15 @@ class ResultScreen extends Component {
     header: null
   };
 
+  column = [
+    {
+      full_name: "ФИО",
+      point: "Ответы",
+      result: "Результат",
+      date: "Дата"
+    }
+  ];
+
   render() {
     const { data } = this.props;
     const loading = data && data.loading;
@@ -16,15 +25,46 @@ class ResultScreen extends Component {
     return (
       <View style={styles.container}>
         {!loading && (
-          <FlatList
-            data={result}
-            renderItem={({ item }) => (
-              <Text style={styles.text}>
-                {item.node.user && item.node.user.full_name} {item.node.point}{" "}
-                {item.node.result}% {item.node.date}
-              </Text>
-            )}
-          />
+          <View>
+            <FlatList
+              data={this.column}
+              renderItem={({ item }) => (
+                <ScrollView horizontal={true}>
+                  <View style={styles.viewEven}>
+                    <Text style={styles.text}>{item.full_name}</Text>
+                  </View>
+                  <View style={styles.viewUneven}>
+                    <Text style={styles.text}>{item.point}</Text>
+                  </View>
+                  <View style={styles.viewEven}>
+                    <Text style={styles.text}> {item.result}</Text>
+                  </View>
+                  <View style={styles.viewUneven}>
+                    <Text style={styles.text}>{item.date}</Text>
+                  </View>
+                </ScrollView>
+              )}
+            />
+            <FlatList
+              data={result}
+              renderItem={({ item }) => (
+                <ScrollView horizontal={true}>
+                  <View style={styles.viewEven}>
+                    <Text style={styles.text}>{item.node.user.full_name}</Text>
+                  </View>
+                  <View style={styles.viewUneven}>
+                    <Text style={styles.text}>{item.node.point}/11</Text>
+                  </View>
+                  <View style={styles.viewEven}>
+                    <Text style={styles.text}> {item.node.result} % </Text>
+                  </View>
+                  <View style={styles.viewUneven}>
+                    <Text style={styles.text}>{item.node.date}</Text>
+                  </View>
+                </ScrollView>
+              )}
+            />
+          </View>
         )}
       </View>
     );
@@ -54,11 +94,24 @@ export default compose(res_data)(ResultScreen);
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 5
+    paddingTop: 30
   },
   text: {
-    padding: 23,
+    fontSize: 18,
     color: "#000000",
-    fontSize: 18
+    textAlign: "center"
+  },
+  viewEven: {
+    backgroundColor: "#ffff4f",
+    height: 70,
+    width: 100,
+    margin: "auto",
+    justifyContent: "center"
+  },
+  viewUneven: {
+    height: 70,
+    width: 100,
+    margin: "auto",
+    justifyContent: "center"
   }
 });

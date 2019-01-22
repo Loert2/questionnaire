@@ -14,8 +14,7 @@ const MenuNavigator = createDrawerNavigator(
   },
   {
     contentOptions: {
-      activeTintColor: "#c29b00",
-      size: 25
+      activeTintColor: "#c29b00"
     }
   }
 );

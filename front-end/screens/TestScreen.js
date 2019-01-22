@@ -51,7 +51,7 @@ class TestScreen extends Component {
 
   exitBtn() {
     this.props.out({}).then(res => {
-      this.props.navigation.push("Home");
+      this.props.navigation.push("CustomDrawer");
     });
   }
 
