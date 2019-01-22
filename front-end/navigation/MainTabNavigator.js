@@ -1,21 +1,20 @@
 import React from "react";
 import {
   createStackNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createDrawerNavigator
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
 import TabBarText from "../components/TabBarText";
 
-import HomeScreen from "../screens/HomeScreen";
 import AuthorizationScreen from "../screens/AuthorizationScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import TestScreen from "../screens/TestScreen";
 import ResultScreen from "../screens/ResultScreen";
+import MenuNavigator from "./MenuNavigator";
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Authorization: AuthorizationScreen,
-  Registration: RegistrationScreen,
+  CustomDrawer: MenuNavigator,
   Test: TestScreen
 });
 
