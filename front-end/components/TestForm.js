@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import update from "immutability-helper";
 import Actions from "./Actions";
 import QuestionForm from "./QuestionForm";
-import { View } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 class TestForm extends Component {
   constructor(props) {
@@ -85,9 +85,12 @@ class TestForm extends Component {
 
   render() {
     const { step, answer } = this.state;
-    const { id_ticket } = this.props;
+    const { container, transparent } = styles;
+    const { id_ticket, data, modalOpen } = this.props;
+    const number_of_question =
+      data && data.ticket && data.ticket.number_of_question;
     return (
-      <View>
+      <View style={[container, modalOpen && transparent]}>
         <QuestionForm
           step={step}
           answer={answer.id_answer}
@@ -96,7 +99,7 @@ class TestForm extends Component {
         />
         <Actions
           step={step}
-          lastStep={11}
+          lastStep={number_of_question}
           previousBtn={this.goPrevious}
           nextBtn={this.goNext}
           submitBtn={this.submitBtn}
@@ -105,6 +108,17 @@ class TestForm extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
+  },
+  transparent: {
+    opacity: 0.7,
+    backgroundColor: "#000000"
+  }
+});
 
 const ANSWER_MUTATION = gql`
   mutation addAnswer($inputAnswerUser: AnswerUserInput!) {
@@ -137,7 +151,22 @@ const res = graphql(RESULT_MUTATION, {
   })
 });
 
+const TICKET = gql`
+  query Ticket($id_ticket: Int!) {
+    ticket(id: $id_ticket) {
+      number_of_question
+    }
+  }
+`;
+
+const ticket = graphql(TICKET, {
+  options: ({ id_ticket }) => ({
+    variables: { id_ticket }
+  })
+});
+
 export default compose(
   answer,
-  res
+  res,
+  ticket
 )(TestForm);

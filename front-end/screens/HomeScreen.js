@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { graphql, compose } from "react-apollo";
+import gql from "graphql-tag";
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
+  componentDidMount() {
+    const { data, navigation } = this.props;
+    const user = data && data.user;
+    if (user !== null) {
+      navigation.push("Test");
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -10,6 +20,19 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+const USER = gql`
+  query User {
+    user {
+      id_user
+    }
+  }
+`;
+
+const user = graphql(USER);
+
+export default compose(user)(HomeScreen);
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,

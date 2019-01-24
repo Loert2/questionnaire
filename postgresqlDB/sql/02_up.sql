@@ -36,9 +36,10 @@ CREATE TABLE "test" (
   "number_of_attempts" INTEGER NULL
 );
 
+/*Добавить колонку number_ticket*/
 CREATE TABLE "ticket" (
   "id_ticket" SERIAL PRIMARY KEY,
-  "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),  
+  "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),
   "number_ticket" INTEGER NOT NULL,
   "number_of_question" INTEGER NOT NULL
 );

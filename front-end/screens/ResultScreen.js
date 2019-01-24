@@ -22,9 +22,14 @@ class ResultScreen extends Component {
     const { data } = this.props;
     const loading = data && data.loading;
     const result = data && data.result && data.result.edges;
+    const user = data && data.user;
+    const id_user = user && user.id_user;
+    console.log(user);
+    console.log(data);
+    console.log(result);
     return (
       <View style={styles.container}>
-        {!loading && (
+        {!loading && user !== null ? (
           <View>
             <FlatList
               data={this.column}
@@ -65,6 +70,8 @@ class ResultScreen extends Component {
               )}
             />
           </View>
+        ) : (
+          <Text>Для просмотра результата войдите в систему</Text>
         )}
       </View>
     );
@@ -90,7 +97,20 @@ const RESULT_DATA = gql`
 
 const res_data = graphql(RESULT_DATA);
 
-export default compose(res_data)(ResultScreen);
+const USER = gql`
+  query User {
+    user {
+      id_user
+    }
+  }
+`;
+
+const user = graphql(USER);
+
+export default compose(
+  res_data,
+  user
+)(ResultScreen);
 
 const styles = StyleSheet.create({
   container: {

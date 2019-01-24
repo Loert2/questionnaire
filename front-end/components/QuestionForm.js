@@ -13,12 +13,15 @@ import update from "immutability-helper";
 
 class QuestionForm extends Component {
   render() {
-    const { data, answer } = this.props;
+    const { data, answer, step } = this.props;
     const question = data && data.ticket && data.ticket.question;
+    const number_of_question =
+      data && data.ticket && data.ticket.number_of_question;
+    const { container, text } = styles;
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>
-          Вопрос {this.props.step}: {question && question.name}
+      <View style={container}>
+        <Text style={text}>
+          Вопрос {step}/{number_of_question}: {question && question.name}
         </Text>
         {question &&
           question.answer &&
@@ -48,6 +51,7 @@ class QuestionForm extends Component {
 const TICKET = gql`
   query Ticket($id_ticket: Int!, $number: Int!) {
     ticket(id: $id_ticket) {
+      number_of_question
       question(id: $id_ticket, number: $number) {
         name
         answer {

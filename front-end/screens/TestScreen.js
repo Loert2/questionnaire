@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Modal,
+  Dimensions
+} from "react-native";
 import TestForm from "../components/TestForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
@@ -9,11 +17,13 @@ class TestScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id_ticket: null
+      id_ticket: null,
+      visible: false
     };
     this.startBtn = this.startBtn.bind(this);
     this.endBtn = this.endBtn.bind(this);
-    this.exitBtn = this.exitBtn.bind(this);
+    this.exitModalBtn = this.exitModalBtn.bind(this);
+    this.exitConfirmBtn = this.exitConfirmBtn.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -21,7 +31,7 @@ class TestScreen extends Component {
       headerRight: (
         <TouchableOpacity
           style={styles.exitBtn}
-          onPress={navigation.getParam("exitBtn")}
+          onPress={navigation.getParam("exitModalBtn")}
         >
           <Icon.Ionicons name={"md-exit"} size={40} color={"#000000"} />
         </TouchableOpacity>
@@ -32,7 +42,7 @@ class TestScreen extends Component {
   };
 
   componentDidMount() {
-    this.props.navigation.setParams({ exitBtn: this.exitBtn });
+    this.props.navigation.setParams({ exitModalBtn: this.exitModalBtn });
   }
 
   startBtn() {
@@ -49,19 +59,58 @@ class TestScreen extends Component {
     });
   }
 
-  exitBtn() {
+  exitModalBtn() {
+    const { visible } = this.state;
+    this.setState({
+      visible: !visible
+    });
+  }
+
+  exitConfirmBtn() {
+    const { visible } = this.state;
+    this.setState({
+      visible: !visible
+    });
     this.props.out({}).then(res => {
       this.props.navigation.push("CustomDrawer");
     });
   }
 
   render() {
-    const { id_ticket } = this.state;
+    const { id_ticket, visible } = this.state;
     const { navigation, data } = this.props;
     const id_user = data && data.user && data.user.id_user;
-    const { startBtn, buttonText } = styles;
+    const {
+      container,
+      startBtn,
+      buttonText,
+      exitConfirmBtn,
+      exitRejectBtn,
+      modal,
+      transparent,
+      modalText
+    } = styles;
     return (
-      <View>
+      <View style={[container, visible && transparent]}>
+        <Modal visible={visible} animationType="slide" transparent={true}>
+          <View style={modal}>
+            <Text style={modalText}>Вы уверены что хотите выйти?</Text>
+            <ScrollView horizontal={true}>
+              <TouchableOpacity
+                style={exitConfirmBtn}
+                onPress={this.exitConfirmBtn}
+              >
+                <Text style={modalText}>Да</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={exitRejectBtn}
+                onPress={this.exitModalBtn}
+              >
+                <Text style={modalText}>Нет</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </Modal>
         {id_ticket === null ? (
           <TouchableOpacity style={startBtn} onPress={this.startBtn}>
             <Text style={buttonText}>Начать тест</Text>
@@ -71,6 +120,7 @@ class TestScreen extends Component {
             id_ticket={id_ticket}
             id_user={id_user}
             endBtn={this.endBtn}
+            modalOpen={visible}
           />
         )}
       </View>
@@ -111,6 +161,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: "#ffff4f",
     marginTop: 120,
+    marginBottom: 220,
     marginLeft: 100,
     marginRight: 100,
     padding: 50,
@@ -131,8 +182,43 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24
   },
-  exitText: {
+  modalText: {
     color: "#000000",
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 24,
+    padding: 10
+  },
+  exitRejectBtn: {
+    backgroundColor: "#ffff4f",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 46,
+    paddingRight: 46,
+    borderRadius: 10
+  },
+  exitConfirmBtn: {
+    backgroundColor: "#FF0000",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 46,
+    paddingRight: 46,
+    borderRadius: 10
+  },
+  modal: {
+    backgroundColor: "#fff",
+    height: 160,
+    width: 300,
+    marginTop: 200,
+    marginLeft: 60,
+    marginRight: 60,
+    borderRadius: 10
+  },
+  transparent: {
+    opacity: 0.7,
+    backgroundColor: "#000000"
+  },
+  container: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
   }
 });
