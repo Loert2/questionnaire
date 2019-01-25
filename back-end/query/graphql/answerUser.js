@@ -7,7 +7,7 @@ import {
 
 import { getAnswerUserById, addAnswerUser } from "../database/db-answer_user";
 
-import { getAnswerValidById } from "../database/db-test";
+import { getAnswerValidById } from "../database/db-answer";
 
 import { nodeInterface } from "./node";
 
@@ -77,12 +77,13 @@ const answerUserInput = {
   fields: () => ({
     id_user: { name: "id_user", type: GraphQLInt },
     id_ticket: { name: "id_ticket", type: GraphQLInt },
+    id_question: { name: "id_question", type: GraphQLInt },
     id_answer: { name: "id_answer", type: GraphQLInt }
   })
 };
 
 const answerUserResolve = async (obj, args, context) => {
-  const { id_user, id_ticket, id_answer } = args;
+  const { id_user, id_ticket, id_question, id_answer } = args;
 
   const correctAnswer = await getAnswerValidById(id_answer);
   const correct = correctAnswer.is_valid;
@@ -90,6 +91,7 @@ const answerUserResolve = async (obj, args, context) => {
   const id_answer_user = await addAnswerUser({
     id_user,
     id_ticket,
+    id_question,
     id_answer,
     correct
   });

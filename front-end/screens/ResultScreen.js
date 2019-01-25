@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
+import { Text, View, Dimensions, StyleSheet } from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import update from "immutability-helper";
+import ResultForm from "../components/ResultForm";
 
 class ResultScreen extends Component {
+  componentDidMount() {
+    const { data } = this.props;
+    data.refetch();
+  }
+
   static navigationOptions = {
     header: null
   };
@@ -20,82 +25,23 @@ class ResultScreen extends Component {
 
   render() {
     const { data } = this.props;
-    const loading = data && data.loading;
-    const result = data && data.result && data.result.edges;
+    const { container, textError, lineAngular } = styles;
     const user = data && data.user;
     const id_user = user && user.id_user;
-    console.log(user);
-    console.log(data);
-    console.log(result);
     return (
-      <View style={styles.container}>
-        {!loading && user !== null ? (
-          <View>
-            <FlatList
-              data={this.column}
-              renderItem={({ item }) => (
-                <ScrollView horizontal={true}>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}>{item.full_name}</Text>
-                  </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.point}</Text>
-                  </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}> {item.result}</Text>
-                  </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.date}</Text>
-                  </View>
-                </ScrollView>
-              )}
-            />
-            <FlatList
-              data={result}
-              renderItem={({ item }) => (
-                <ScrollView horizontal={true}>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}>{item.node.user.full_name}</Text>
-                  </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.node.point}/11</Text>
-                  </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}> {item.node.result} % </Text>
-                  </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.node.date}</Text>
-                  </View>
-                </ScrollView>
-              )}
-            />
-          </View>
+      <View style={container}>
+        {user !== null ? (
+          <ResultForm id_user={id_user} />
         ) : (
-          <Text>Для просмотра результата войдите в систему</Text>
+          <Text style={textError}>
+            Для просмотра результатов войдите в систему
+          </Text>
         )}
+        <View style={lineAngular} />
       </View>
     );
   }
 }
-
-const RESULT_DATA = gql`
-  query Result {
-    result {
-      edges {
-        node {
-          point
-          result
-          date
-          user {
-            full_name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const res_data = graphql(RESULT_DATA);
 
 const USER = gql`
   query User {
@@ -107,31 +53,29 @@ const USER = gql`
 
 const user = graphql(USER);
 
-export default compose(
-  res_data,
-  user
-)(ResultScreen);
+export default compose(user)(ResultScreen);
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height
   },
-  text: {
-    fontSize: 18,
+  textError: {
+    marginTop: 150,
     color: "#000000",
-    textAlign: "center"
+    fontSize: 32,
+    lineHeight: 50,
+    textAlign: "center",
+    fontFamily: "space-mono"
   },
-  viewEven: {
-    backgroundColor: "#ffff4f",
-    height: 70,
-    width: 100,
-    margin: "auto",
-    justifyContent: "center"
-  },
-  viewUneven: {
-    height: 70,
-    width: 100,
-    margin: "auto",
-    justifyContent: "center"
+  lineAngular: {
+    transform: [{ rotate: "-55deg" }],
+    position: "absolute",
+    marginTop: 535,
+    marginLeft: 240,
+    paddingTop: 20,
+    paddingBottom: 20,
+    width: 250,
+    backgroundColor: "#ffff4f"
   }
 });

@@ -13,8 +13,14 @@ export const getResultById = async id => {
   return dataExists(data) ? { id, ...data[0] } : null;
 };
 
-export const addResult = async ({ id_test, id_user, point, result }) => {
-  const data = { id_user, id_test, point, result, date: new Date() };
+export const addResult = async ({
+  id_user,
+  id_test,
+  id_ticket,
+  point,
+  result
+}) => {
+  const data = { id_user, id_test, id_ticket, point, result, date: new Date() };
   const returningData = await resultTable()
     .returning("id_result")
     .insert(data);

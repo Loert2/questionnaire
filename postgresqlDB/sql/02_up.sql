@@ -13,19 +13,23 @@ CREATE TABLE "session" (
   "updated_at" timestamptz NOT NULL DEFAULT now()
 );
 
+/*Добавить колонку id_ticket*/
 CREATE TABLE "result" (
   "id_result" SERIAL PRIMARY KEY,
   "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
+  "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
   "point" INTEGER NOT NULL,
   "result" INTEGER NOT NULL,
   "date" timestamptz NOT NULL DEFAULT now()
 );
 
+/*Добавить колонку id_question*/
 CREATE TABLE "answer_user" (
   "id_answer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
   "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
+  "id_question" INTEGER NOT NULL REFERENCES "question" ("id_question"),
   "id_answer" INTEGER NOT NULL REFERENCES "answer" ("id_answer"),
   "correct" BOOLEAN NOT NULL
 );

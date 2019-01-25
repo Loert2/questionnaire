@@ -1,6 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 
-import { getAnswerById, getAnswerList } from "../database/db-test";
+import {
+  getAnswerById,
+  getAnswerList,
+  getAnswerCurrect
+} from "../database/db-answer";
 
 import { nodeInterface } from "./node";
 
@@ -39,3 +43,10 @@ export const AnswerConnection = createConnection({
     return await getAnswerList(obj.id_question);
   }
 });
+
+export const AnswerСurrectField = {
+  type: AnswerType,
+  resolve: async (obj, args, context) => {
+    return await getAnswerCurrect();
+  }
+};

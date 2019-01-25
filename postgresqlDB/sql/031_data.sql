@@ -452,7 +452,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (55, 'Не более 2-3 см.', false),
 (55, 'Не менее 3-4 см.', true),
 (55, 'Больше 4-5 см.', false),
-!!!
+
 (56, 'Если установленная мощность электроустановок не превышает 5 ква.', false),
 (56, 'Если установленная мощность электроустановок не превышает 10 ква.', true),
 (56, 'Работник,  замещающий  ответственного  за  электрохозяйство,  должен обязательно назначаться в любом случае.', false),
@@ -503,7 +503,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (66, '5 надавливаний.', false),
 (66, '10 надавливаний.', false),
 (66, '15 надавливаний.', true),
-!!
+
 (67, 'Главный инженер организации.', false),
 (67, 'Энергетическая служба организации.', false),
 (67, 'Ответственный за электрохозяйство организации.', true),
@@ -552,7 +552,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (77, '5.', true),
 (77, '10.', false),
 (77, '15.', false),
-!!
+
 (78, 'Главный инженер организации.', false),
 (78, 'Энергетическая служба организации.', false),
 (78, 'Ответственный за электрохозяйство организации.', true),
@@ -604,7 +604,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (88, 'Чтобы снизить давление.', false),
 (88, 'Для сохранения жизни головного мозга.', true),
 (88, 'Чтобы у пострадавшего не было болевого шока.', false),
-!!
+
 (89, 'Ответственный за электрохозяйство организации.', true),
 (89, 'Главный инженер организации.', false),
 (89, 'Энергетическая служба организации.', false),
@@ -659,7 +659,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (99, 'Повернуть пострадавшего на живот и надавить кулаками ниже пупка.', true),
 (99, 'Поправить голову.', false),
 (99, 'Уложить на бок.', false),
-!!
+
 (100, 'Iii группу.', false),
 (100, 'Iv группу.', false),
 (100, 'Не ниже iv группы.', false),
@@ -711,7 +711,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (110, 'Пострадавший в положении «лежа» на боку.', false),
 (110, 'Пострадавший в положении «сидя» или «лежа».', true),
 (110, 'В любом положении пострадавшего.', false),
-!!
+
 (111, 'Iii группу.', false),
 (111, 'Iv группу.', true),
 (111, 'V группу.', false),
@@ -761,7 +761,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (121, 'В любом положении пострадавшего.', false),
 (121, 'В положении «лежа на спине» на ровной жесткой поверхности.', true),
 (121, 'В положении пострадавшего на животе.', false),
-!!
+
 (122, 'Главный инженер организации.', false),
 (122, 'Энергетическая служба организации.', false),
 (122, 'Руководитель организации.', false),
@@ -814,7 +814,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (132, 'Лежа на животе.', true),
 (132, 'Лежа на спине.', false),
 (132, 'В положении сидя.', false),
-!!
+
 (133, 'Руководители и специалисты энергетической службы.', true),
 (133, 'Руководители и специалисты технологической службы.', false),
 (133, 'Руководитель организации.', false),
@@ -867,7 +867,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (143, 'Не более 1,5 часов.', false),
 (143, 'Не более 2,0 часов.', false),
 (143, 'Не более 3 часов.', false),
-!!
+
 (144, 'Руководитель организации.', false),
 (144, 'Работники,  непосредственно  обслуживающие  электроустановки,  по  вине которых произошли нарушения.', true),
 (144, 'Ответственный за электрохозяйство организации.', false),
@@ -919,7 +919,7 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (154, 'Да, если есть салфетки «колетекс».', false),
 (154, 'Да, если инородное тело небольшое.', false),
 (154, 'Нет.', true),
-!!
+
 (155, 'Руководитель организации.', false),
 (155, 'Руководители и специалисты технологической службы организации.', true),
 (155, 'Ответственный за электрохозяйство организации.', false),
@@ -968,53 +968,3 @@ INSERT INTO answer (id_question, name, is_valid) VALUES
 (165, 'Только «лежа» на боку.', false),
 (165, 'В удобной для пострадавшего позе.', false),
 (165, 'Только «лежа» на спине.', false);
-
-/*
-ALTER TABLE question ADD number_question INTEGER NULL;
-
-UPDATE question
-SET number_question = 1
-WHERE id_question = 1 OR id_question = 12 OR id_question = 23;
-
-UPDATE question
-SET number_question = 2
-WHERE id_question = 2 OR id_question = 13 OR id_question = 24;
-
-UPDATE question
-SET number_question = 3
-WHERE id_question = 3 OR id_question = 14 OR id_question = 25;
-
-UPDATE question
-SET number_question = 4
-WHERE id_question = 4 OR id_question = 15 OR id_question = 26;
-
-UPDATE question
-SET number_question = 5
-WHERE id_question = 5 OR id_question = 16 OR id_question = 27;
-
-UPDATE question
-SET number_question = 6
-WHERE id_question = 6 OR id_question = 17 OR id_question = 28;
-
-UPDATE question
-SET number_question = 7
-WHERE id_question = 7 OR id_question = 18 OR id_question = 29;
-
-UPDATE question
-SET number_question = 8
-WHERE id_question = 8 OR id_question = 19 OR id_question = 30;
-
-UPDATE question
-SET number_question = 9
-WHERE id_question = 9 OR id_question = 20 OR id_question = 31;
-
-UPDATE question
-SET number_question = 10
-WHERE id_question = 10 OR id_question = 21 OR id_question = 32;
-
-UPDATE question
-SET number_question = 11
-WHERE id_question = 11 OR id_question = 22 OR id_question = 33;
-
-*/
-

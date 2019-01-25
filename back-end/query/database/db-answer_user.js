@@ -29,10 +29,11 @@ export const changeAnswerUser = async ({ id_answer_user, correct }) => {
 export const addAnswerUser = async ({
   id_user,
   id_ticket,
+  id_question,
   id_answer,
   correct
 }) => {
-  const data = { id_user, id_ticket, id_answer, correct };
+  const data = { id_user, id_ticket, id_answer, id_question, correct };
   const returningData = await answerUserTable()
     .returning("id_answer_user")
     .insert(data);

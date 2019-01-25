@@ -12,6 +12,7 @@ class TestForm extends Component {
     this.state = {
       step: 1,
       answer: {
+        id_question: null,
         id_answer: null
       },
       answer_user: []
@@ -21,9 +22,9 @@ class TestForm extends Component {
     this.submitBtn = this.submitBtn.bind(this);
   }
 
-  _handleChecked = ({ id_answer }) => {
+  _handleChecked = ({ id_question, id_answer }) => {
     this.setState({
-      answer: { id_answer }
+      answer: { id_question, id_answer }
     });
   };
 
@@ -31,12 +32,13 @@ class TestForm extends Component {
   goNext() {
     const {
       step,
-      answer: { id_answer }
+      answer: { id_question, id_answer }
     } = this.state;
     const { id_user, id_ticket, addAns } = this.props;
     addAns({
       id_user,
       id_ticket,
+      id_question,
       id_answer
     }).then(res => {
       // this.setState(
@@ -67,13 +69,14 @@ class TestForm extends Component {
 
   async submitBtn() {
     const {
-      answer: { id_answer }
+      answer: { id_question, id_answer }
     } = this.state;
     const { id_user, id_ticket, addAns, addRes, endBtn } = this.props;
     console.log("addRes", this.props);
     await addAns({
       id_user,
       id_ticket,
+      id_question,
       id_answer
     });
     await addRes({

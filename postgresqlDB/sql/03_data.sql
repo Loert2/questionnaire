@@ -251,3 +251,20 @@ SET number_question = 11
 WHERE id_question = 11 OR id_question = 22 OR id_question = 33;
 
 */
+
+/*
+ALTER TABLE ticket ADD number_ticket INTEGER NULL;
+
+UPDATE ticket
+SET number_ticket = 1
+WHERE id_ticket = 2;
+
+UPDATE ticket
+SET number_ticket = 2
+WHERE id_ticket = 3;
+
+UPDATE ticket
+SET number_ticket = 3
+WHERE id_ticket = 4;
+
+*/

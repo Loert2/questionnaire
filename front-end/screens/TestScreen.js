@@ -84,11 +84,14 @@ class TestScreen extends Component {
       container,
       startBtn,
       buttonText,
+      text,
       exitConfirmBtn,
       exitRejectBtn,
       modal,
       transparent,
-      modalText
+      modalText,
+      textContainer,
+      lineAngular
     } = styles;
     return (
       <View style={[container, visible && transparent]}>
@@ -112,9 +115,18 @@ class TestScreen extends Component {
           </View>
         </Modal>
         {id_ticket === null ? (
-          <TouchableOpacity style={startBtn} onPress={this.startBtn}>
-            <Text style={buttonText}>Начать тест</Text>
-          </TouchableOpacity>
+          <View>
+            <View style={textContainer}>
+              <Text style={text}>
+                В тесте представлены экзаменационные билеты для проверки знаний
+                по электробезопасности
+              </Text>
+              <Text style={text}>Билет выбирается случайным образом</Text>
+            </View>
+            <TouchableOpacity style={startBtn} onPress={this.startBtn}>
+              <Text style={buttonText}>Начать тест</Text>
+            </TouchableOpacity>
+          </View>
         ) : (
           <TestForm
             id_ticket={id_ticket}
@@ -123,6 +135,7 @@ class TestScreen extends Component {
             modalOpen={visible}
           />
         )}
+        <View style={lineAngular} />
       </View>
     );
   }
@@ -158,20 +171,26 @@ export default compose(
 
 const styles = StyleSheet.create({
   startBtn: {
-    flexGrow: 1,
     backgroundColor: "#ffff4f",
-    marginTop: 120,
-    marginBottom: 220,
+    borderRadius: 10,
+    marginTop: 30,
     marginLeft: 100,
     marginRight: 100,
-    padding: 50,
-    borderRadius: 160
+    paddingTop: 18,
+    paddingBottom: 18,
+    paddingLeft: 24,
+    paddingRight: 24
+  },
+  text: {
+    color: "#000000",
+    fontSize: 20,
+    textAlign: "center",
+    fontFamily: "space-mono"
   },
   buttonText: {
     color: "#000000",
-    fontSize: 32,
-    lineHeight: 50,
     textAlign: "center",
+    fontSize: 16,
     fontFamily: "space-mono"
   },
   exitBtn: {
@@ -220,5 +239,18 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height
+  },
+  textContainer: {
+    marginTop: 100
+  },
+  lineAngular: {
+    transform: [{ rotate: "-55deg" }],
+    position: "absolute",
+    marginTop: 450,
+    marginLeft: 240,
+    paddingTop: 20,
+    paddingBottom: 20,
+    width: 250,
+    backgroundColor: "#ffff4f"
   }
 });

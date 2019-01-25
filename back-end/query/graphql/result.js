@@ -27,6 +27,10 @@ export const ResultType = new GraphQLObjectType({
       name: "Id_user",
       type: GraphQLInt
     },
+    id_ticket: {
+      name: "Id_ticket",
+      type: GraphQLInt
+    },
     point: {
       name: "Point",
       type: GraphQLInt
@@ -93,9 +97,11 @@ const resultResolve = async (obj, args, context) => {
   } else {
     var result = 0;
   }
+
   const id_result = await addResult({
     id_test,
     id_user,
+    id_ticket,
     point,
     result
   });

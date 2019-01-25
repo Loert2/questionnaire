@@ -15,6 +15,7 @@ class QuestionForm extends Component {
   render() {
     const { data, answer, step } = this.props;
     const question = data && data.ticket && data.ticket.question;
+    const id_question = question && question.id_question;
     const number_of_question =
       data && data.ticket && data.ticket.number_of_question;
     const { container, text } = styles;
@@ -37,6 +38,7 @@ class QuestionForm extends Component {
                 checked={el.node.id_answer === answer ? true : false}
                 onPress={checked =>
                   this.props.handleChecked({
+                    id_question,
                     id_answer: el.node.id_answer
                   })
                 }
@@ -53,6 +55,7 @@ const TICKET = gql`
     ticket(id: $id_ticket) {
       number_of_question
       question(id: $id_ticket, number: $number) {
+        id_question
         name
         answer {
           edges {

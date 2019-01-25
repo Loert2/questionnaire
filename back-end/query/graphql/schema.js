@@ -16,7 +16,7 @@ import {
 } from "./user";
 
 import { TicketField } from "./ticket";
-import { AddAnswerUserField } from "./answerUser";
+import { AddAnswerUserField, AnswerUserConnection } from "./answerUser";
 import { ResultConnection, CountingResultField } from "./result";
 
 const query = new GraphQLObjectType({
@@ -25,6 +25,7 @@ const query = new GraphQLObjectType({
     user: UserField,
     ticket: TicketField,
     result: ResultConnection,
+    answer_user: AnswerUserConnection,
     node: nodeField
   })
 });

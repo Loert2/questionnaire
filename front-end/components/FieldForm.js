@@ -16,12 +16,21 @@ class FieldForm extends Component {
   };
 
   render() {
+    const { error, button } = this.props;
+    const {
+      topStrip,
+      icon,
+      container,
+      submitButton,
+      submitButtonText,
+      lineAngular
+    } = styles;
     return (
       <View>
-        <View style={styles.topStrip}>
-          <Icon.Ionicons name="md-book" style={styles.icon} />
+        <View style={topStrip}>
+          <Icon.Ionicons name="md-book" style={icon} />
         </View>
-        <View style={styles.container}>
+        <View style={container}>
           {this.props.fileds.map(el => (
             <TextInput
               key={el.label + el.type + this.props[el.name]}
@@ -34,16 +43,12 @@ class FieldForm extends Component {
               onChangeText={value => this.setState({ [el.name]: value })}
             />
           ))}
-          {this.props.error !== 0 && (
-            <Text style={styles.error}>{this.props.error}</Text>
-          )}
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={this._handleSubmit}
-          >
-            <Text style={styles.submitButtonText}>{this.props.button}</Text>
+          {error !== 0 && <Text style={styles.error}>{error}</Text>}
+          <TouchableOpacity style={submitButton} onPress={this._handleSubmit}>
+            <Text style={submitButtonText}>{button}</Text>
           </TouchableOpacity>
         </View>
+        <View style={lineAngular} />
       </View>
     );
   }
@@ -91,5 +96,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff4f",
     borderColor: "#000000",
     borderWidth: 1
+  },
+  lineAngular: {
+    transform: [{ rotate: "-55deg" }],
+    position: "absolute",
+    marginTop: 450,
+    marginLeft: 240,
+    paddingTop: 20,
+    paddingBottom: 20,
+    width: 250,
+    backgroundColor: "#ffff4f"
   }
 });
