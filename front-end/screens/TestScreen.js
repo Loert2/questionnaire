@@ -12,6 +12,7 @@ import TestForm from "../components/TestForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import { Icon } from "expo";
+import user from "../query/UserQuery";
 
 class TestScreen extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class TestScreen extends Component {
   }
 
   startBtn() {
-    var random = Math.round(Math.random() * (4 - 2) + 2);
+    var random = Math.round(Math.random() * (15 - 1) + 1);
     console.log(random);
     this.setState({
       id_ticket: random
@@ -67,12 +68,14 @@ class TestScreen extends Component {
   }
 
   exitConfirmBtn() {
+    const { data, out, navigation } = this.props;
     const { visible } = this.state;
     this.setState({
       visible: !visible
     });
-    this.props.out({}).then(res => {
-      this.props.navigation.push("CustomDrawer");
+    out({}).then(res => {
+      navigation.push("CustomDrawer");
+      data.refetch();
     });
   }
 
@@ -140,16 +143,6 @@ class TestScreen extends Component {
     );
   }
 }
-
-const USER = gql`
-  query User {
-    user {
-      id_user
-    }
-  }
-`;
-
-const user = graphql(USER);
 
 const SIGN_OUT_MUTATION = gql`
   mutation SignOut($inputOut: UserSignOutInput!) {

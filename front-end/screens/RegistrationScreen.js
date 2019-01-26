@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
+import user from "../query/UserQuery";
 
 class RegistrationScreen extends Component {
   state = {};
@@ -33,9 +34,11 @@ class RegistrationScreen extends Component {
   ];
 
   _handleRegSubmit = ({ e_mail, full_name, password, confirmPassword }) => {
+    const { data, reg, navigation } = this.props;
     if (password === confirmPassword) {
-      this.props.reg({ e_mail, full_name, password }).then(res => {
-        this.props.navigation.push("Test");
+      reg({ e_mail, full_name, password }).then(res => {
+        navigation.push("Test");
+        data.refetch();
       });
       this.setState({ error: "" });
     } else {
@@ -68,4 +71,7 @@ const up = graphql(SIGN_UP_MUTATION, {
     reg: inputUp => mutate({ variables: { inputUp } })
   })
 });
-export default compose(up)(RegistrationScreen);
+export default compose(
+  up,
+  user
+)(RegistrationScreen);

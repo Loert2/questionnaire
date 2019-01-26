@@ -13,7 +13,6 @@ CREATE TABLE "session" (
   "updated_at" timestamptz NOT NULL DEFAULT now()
 );
 
-/*Добавить колонку id_ticket*/
 CREATE TABLE "result" (
   "id_result" SERIAL PRIMARY KEY,
   "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),
@@ -24,7 +23,6 @@ CREATE TABLE "result" (
   "date" timestamptz NOT NULL DEFAULT now()
 );
 
-/*Добавить колонку id_question*/
 CREATE TABLE "answer_user" (
   "id_answer_user" SERIAL PRIMARY KEY,
   "id_user" INTEGER NOT NULL REFERENCES "system_user" ("id_user"),
@@ -40,7 +38,6 @@ CREATE TABLE "test" (
   "number_of_attempts" INTEGER NULL
 );
 
-/*Добавить колонку number_ticket*/
 CREATE TABLE "ticket" (
   "id_ticket" SERIAL PRIMARY KEY,
   "id_test" INTEGER NOT NULL REFERENCES "test" ("id_test"),

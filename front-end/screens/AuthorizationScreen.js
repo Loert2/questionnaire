@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FieldForm from "../components/FieldForm";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
+import user from "../query/UserQuery";
 
 class AuthorisationScreen extends Component {
   state = {};
@@ -21,10 +22,12 @@ class AuthorisationScreen extends Component {
   ];
 
   _handleAuhtSubmit = ({ e_mail, password }) => {
-    this.props.update({ e_mail, password }).then(res => {
+    const { data, update, navigation } = this.props;
+    update({ e_mail, password }).then(res => {
       if (res.data.UserSignIn.error === null) {
         this.setState({ error: "" });
-        this.props.navigation.push("Test");
+        navigation.push("Test");
+        data.refetch();
       } else {
         this.setState({ error: "Неправильный логин или пароль" });
       }
@@ -60,4 +63,7 @@ const sIn = graphql(SIGN_DOWN_MUTATION, {
   })
 });
 
-export default compose(sIn)(AuthorisationScreen);
+export default compose(
+  sIn,
+  user
+)(AuthorisationScreen);

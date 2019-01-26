@@ -3,6 +3,7 @@ import { Text, View, Dimensions, StyleSheet } from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import ResultForm from "../components/ResultForm";
+import user from "../query/UserQuery";
 
 class ResultScreen extends Component {
   componentDidMount() {
@@ -42,16 +43,6 @@ class ResultScreen extends Component {
     );
   }
 }
-
-const USER = gql`
-  query User {
-    user {
-      id_user
-    }
-  }
-`;
-
-const user = graphql(USER);
 
 export default compose(user)(ResultScreen);
 

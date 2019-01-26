@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
+import user from "../query/UserQuery";
 
 class HomeScreen extends Component {
   componentDidMount() {
@@ -25,16 +26,6 @@ class HomeScreen extends Component {
     );
   }
 }
-
-const USER = gql`
-  query User {
-    user {
-      id_user
-    }
-  }
-`;
-
-const user = graphql(USER);
 
 export default compose(user)(HomeScreen);
 

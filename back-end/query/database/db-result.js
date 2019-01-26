@@ -4,6 +4,10 @@ const resultTable = () => db("result");
 
 const dataExists = data => data && data[0];
 
+export const getResultListByIdUser = async id => {
+  return await resultTable().where("id_user", id);
+};
+
 export const getResultList = () => {
   return resultTable();
 };

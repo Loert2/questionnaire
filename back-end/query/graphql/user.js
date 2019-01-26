@@ -40,6 +40,10 @@ export const UserType = new GraphQLObjectType({
       name: "e_mail",
       type: GraphQLString
     },
+    role: {
+      name: "role",
+      type: GraphQLString
+    },
     result: ResultConnection
   })
 });
@@ -111,6 +115,7 @@ const signUpInput = {
 const signUpResolve = async (obj, args, context) => {
   const contextId = context.userId;
   const { e_mail, full_name, password } = args;
+  const role = "student";
 
   if (contextId) {
     return { error: "alreadySignedIn" };
@@ -121,7 +126,7 @@ const signUpResolve = async (obj, args, context) => {
     return { error: "e_mailAlreadyInUse" };
   }
 
-  const id_user = await addUser({ e_mail, full_name, password });
+  const id_user = await addUser({ e_mail, full_name, password, role });
   const user = await getUserById(id_user);
   await context.setUserId(user.id_user);
 

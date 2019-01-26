@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { createDrawerNavigator } from "react-navigation";
 import HomeScreen from "../screens/HomeScreen";
 import AuthorizationScreen from "../screens/AuthorizationScreen";

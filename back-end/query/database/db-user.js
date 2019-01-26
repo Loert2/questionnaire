@@ -6,7 +6,7 @@ const rawByField = (fieldName, value) => table().where(fieldName, "=", value);
 const dataExists = data => data && data[0];
 
 export const getUserById = async id_user => {
-  const fields = ["e_mail", "full_name", "password"];
+  const fields = ["e_mail", "full_name", "password", "role"];
   const data = await rawByField("id_user", id_user).select(...fields);
   return dataExists(data) ? { id_user, ...data[0] } : null;
 };
@@ -28,8 +28,8 @@ export const changePassword = async ({ id_user, password }) => {
   });
 };
 
-export const addUser = async ({ e_mail, full_name, password }) => {
-  const data = { e_mail, full_name, password };
+export const addUser = async ({ e_mail, full_name, password, role }) => {
+  const data = { e_mail, full_name, password, role };
   const returningData = await table()
     .returning("id_user")
     .insert(data);

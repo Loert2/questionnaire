@@ -8,7 +8,7 @@ const config = {
       port: 5432,
       user: "postgres",
       password: "postgres",
-      database: "questionnaire"
+      database: "questionnaire2"
     }
   },
   production: {
