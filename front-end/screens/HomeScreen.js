@@ -9,9 +9,9 @@ class HomeScreen extends Component {
     const { data, navigation } = this.props;
     const user = data && data.user;
     data.refetch();
-    if (user !== null) {
-      navigation.push("Test");
-    }
+    // if (user !== null) {
+    //   navigation.push("Test");
+    // }
   }
 
   render() {

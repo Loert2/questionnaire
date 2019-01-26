@@ -5,6 +5,7 @@ const USER = gql`
   query User {
     user {
       id_user
+      role
     }
   }
 `;

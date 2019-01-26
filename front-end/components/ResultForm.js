@@ -10,6 +10,7 @@ import {
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import AnaliticForm from "./AnaliticForm";
+import FlatListForm from "./FlatListForm";
 
 class ResultForm extends Component {
   constructor(props) {
@@ -41,9 +42,11 @@ class ResultForm extends Component {
 
   render() {
     const { id_ticket, idUser, openAn } = this.state;
-    const { data, id_user } = this.props;
+    const { data, id_user, role, result_user } = this.props;
+    const { container, viewEven, viewUneven, text } = styles;
     const loading = data && data.loading;
     const result = data && data.result && data.result.edges;
+    console.log("result", result_user);
     return (
       <View style={styles.container}>
         {!loading && !openAn ? (
@@ -53,54 +56,26 @@ class ResultForm extends Component {
               renderItem={({ item }) => (
                 <ScrollView horizontal={true}>
                   <View style={styles.viewEven}>
-                    <Text style={styles.text}>{item.full_name}</Text>
+                    <Text style={text}>{item.full_name}</Text>
                   </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.point}</Text>
+                  <View style={viewUneven}>
+                    <Text style={text}>{item.point}</Text>
                   </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}> {item.result}</Text>
+                  <View style={viewEven}>
+                    <Text style={text}> {item.result}</Text>
                   </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.date}</Text>
+                  <View style={viewUneven}>
+                    <Text style={text}>{item.date}</Text>
                   </View>
                 </ScrollView>
               )}
             />
-            <FlatList
-              data={result}
-              renderItem={({ item }) => (
-                <ScrollView horizontal={true}>
-                  {id_user === idUser ? (
-                    <TouchableOpacity
-                      style={styles.viewEven}
-                      onPress={this.openAnalitic({
-                        item: { node: { id_ticket } },
-                        item: { node: { id_user } }
-                      })}
-                    >
-                      <Text style={styles.text}>
-                        {item.node.user.full_name}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <View style={styles.viewEven}>
-                      <Text style={styles.text}>
-                        {item.node.user.full_name}
-                      </Text>
-                    </View>
-                  )}
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.node.point}/11</Text>
-                  </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}> {item.node.result} % </Text>
-                  </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.node.date}</Text>
-                  </View>
-                </ScrollView>
-              )}
+            <FlatListForm
+              table={role === "admin" ? result : result_user}
+              openAnalitic={this.openAnalitic}
+              viewEven={viewEven}
+              viewUneven={viewUneven}
+              text={text}
             />
           </View>
         ) : (
@@ -130,6 +105,28 @@ const RESULT_DATA = gql`
 `;
 
 const res_data = graphql(RESULT_DATA);
+
+// const RESULT_USER = gql`
+//   query ResultUser {
+//     user {
+//       role
+//       result_user {
+//         edges {
+//           node {
+//             point
+//             result
+//             date
+//             user {
+//               full_name
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+//
+// const res_user = graphql(RESULT_USER);
 
 export default compose(res_data)(ResultForm);
 

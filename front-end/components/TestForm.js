@@ -72,7 +72,6 @@ class TestForm extends Component {
       answer: { id_question, id_answer }
     } = this.state;
     const { id_user, id_ticket, addAns, addRes, endBtn } = this.props;
-    console.log("addRes", this.props);
     await addAns({
       id_user,
       id_ticket,

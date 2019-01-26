@@ -5,9 +5,7 @@ import { getAnswerUserList } from "../database/db-answer_user";
 import { getResultList, addResult, getResultById } from "../database/db-result";
 
 import { nodeInterface } from "./node";
-
 import { globalIdField } from "graphql-relay";
-
 import { createConnection, createMutation, createPayload } from "./utilities";
 
 import { UserName } from "./user";

@@ -29,10 +29,12 @@ class ResultScreen extends Component {
     const { container, textError, lineAngular } = styles;
     const user = data && data.user;
     const id_user = user && user.id_user;
+    const role = user && user.role;
+    const result_user = user && user.result_user.edges;
     return (
       <View style={container}>
         {user !== null ? (
-          <ResultForm id_user={id_user} />
+          <ResultForm id_user={id_user} role={role} result_user={result_user} />
         ) : (
           <Text style={textError}>
             Для просмотра результатов войдите в систему
@@ -44,7 +46,30 @@ class ResultScreen extends Component {
   }
 }
 
-export default compose(user)(ResultScreen);
+const RESULT_USER = gql`
+  query ResultUser {
+    user {
+      id_user
+      role
+      result_user {
+        edges {
+          node {
+            point
+            result
+            date
+            user {
+              full_name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const res_user = graphql(RESULT_USER);
+
+export default compose(res_user)(ResultScreen);
 
 const styles = StyleSheet.create({
   container: {

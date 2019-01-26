@@ -19,7 +19,7 @@ import { createMutation, createPayload } from "./utilities";
 
 import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
 
-import { ResultConnection } from "./result";
+import { ResultUserConnection } from "./resultUser";
 
 // === === === === === === QUERY === === === === === ===
 
@@ -44,7 +44,7 @@ export const UserType = new GraphQLObjectType({
       name: "role",
       type: GraphQLString
     },
-    result: ResultConnection
+    result_user: ResultUserConnection
   })
 });
 

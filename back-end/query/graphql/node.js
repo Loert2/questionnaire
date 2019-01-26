@@ -46,6 +46,10 @@ const { nodeInterface, nodeField } = nodeDefinitions(
         const Result = await getResultById(id);
         if (!Result) return null;
         return { ...Result, _type: require("./result").ResultType };
+      case "ResultUser":
+        const ResultUser = await getResultById(id);
+        if (!ResultUser) return null;
+        return { ...ResultUser, _type: require("./result").ResultUserType };
       case "QuestionCurrect":
         const QuestionCurrect = await getQuestionById(id);
         if (!QuestionCurrect) return null;
