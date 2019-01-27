@@ -63,7 +63,7 @@ const generateConnectionType = nodeType => {
 
 export const createConnection = config => ({
   type: generateConnectionType(config.field.type),
-  args: connectionArgs,
+  args: config.args,
   resolve: async (object, args, context) => {
     const ids = await config.resolveIdsList(object, args, context);
     const res = ids.map(item =>

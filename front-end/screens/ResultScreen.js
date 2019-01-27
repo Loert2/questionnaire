@@ -54,10 +54,12 @@ const RESULT_USER = gql`
       result_user {
         edges {
           node {
+            id_ticket
             point
             result
             date
             user {
+              id_user
               full_name
             }
           }

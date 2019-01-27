@@ -96,6 +96,7 @@ const RESULT_DATA = gql`
           result
           date
           user {
+            id_user
             full_name
           }
         }

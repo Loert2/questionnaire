@@ -3,13 +3,12 @@ import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 import {
   getAnswerById,
   getAnswerList,
-  getAnswerCurrect
+  getAnswerCorrect,
+  getAnswerNameById
 } from "../database/db-answer";
 
 import { nodeInterface } from "./node";
-
-import { globalIdField } from "graphql-relay";
-
+import { globalIdField, connectionArgs } from "graphql-relay";
 import { createConnection } from "./utilities";
 
 // === === === === === === QUERY ANSWER === === === === === ===
@@ -21,6 +20,10 @@ export const AnswerType = new GraphQLObjectType({
     id: globalIdField(),
     id_answer: {
       name: "Id_answer",
+      type: GraphQLInt
+    },
+    id_question: {
+      name: "Id_question",
       type: GraphQLInt
     },
     name: {
@@ -39,14 +42,24 @@ export const AnswerField = {
 
 export const AnswerConnection = createConnection({
   field: AnswerField,
+  args: {
+    ...connectionArgs
+  },
   resolveIdsList: async (obj, args, context) => {
     return await getAnswerList(obj.id_question);
   }
 });
 
-export const AnswerСurrectField = {
+export const AnswerName = {
   type: AnswerType,
   resolve: async (obj, args, context) => {
-    return await getAnswerCurrect();
+    return await getAnswerNameById(obj.id_answer);
+  }
+};
+
+export const AnswerCorrect = {
+  type: AnswerType,
+  resolve: async (obj, args, context) => {
+    return await getAnswerCorrect(obj.id_question);
   }
 };

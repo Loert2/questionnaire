@@ -19,9 +19,19 @@ export const getAnswerValidById = async id => {
   return dataExists(data) ? { ...data[0] } : null;
 };
 
-export const getAnswerCurrect = () => {
-  const data = answerTable().where({
-    is_valid: true
-  });
+export const getAnswerNameById = async id_answer => {
+  const data = await answerTable()
+    .where("id_answer", id_answer)
+    .select("name");
+  return dataExists(data) ? { ...data[0] } : null;
+};
+
+export const getAnswerCorrect = async id_question => {
+  const data = await answerTable()
+    .where({
+      id_question: id_question,
+      is_valid: true
+    })
+    .select("name");
   return dataExists(data) ? { ...data[0] } : null;
 };

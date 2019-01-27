@@ -5,12 +5,11 @@ const answerUserTable = () => db("answer_user");
 const dataExists = data => data && data[0];
 
 export const getAnswerUserList = async ({ id_ticket, id_user }) => {
-  return await answerUserTable()
-    .where({
-      id_ticket: id_ticket,
-      id_user: id_user
-    })
-    .select("correct");
+  return await answerUserTable().where({
+    id_ticket: id_ticket,
+    id_user: id_user,
+    correct: false
+  });
 };
 
 export const getAnswerUserById = async id => {

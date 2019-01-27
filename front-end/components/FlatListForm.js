@@ -16,9 +16,14 @@ const FlatListForm = ({ table, openAnalitic, viewEven, viewUneven, text }) => {
           <View style={viewEven}>
             <Text style={text}>{item.node.user.full_name}</Text>
           </View>
-          <View style={viewUneven}>
+          <TouchableOpacity
+            style={viewUneven}
+            onPress={openAnalitic({
+              item: { node: { user: { id_user }, id_ticket } }
+            })}
+          >
             <Text style={text}>{item.node.point}/11</Text>
-          </View>
+          </TouchableOpacity>
           <View style={viewEven}>
             <Text style={text}> {item.node.result} % </Text>
           </View>
