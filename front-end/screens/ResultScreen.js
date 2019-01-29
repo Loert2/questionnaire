@@ -27,6 +27,7 @@ class ResultScreen extends Component {
   render() {
     const { data } = this.props;
     const { container, textError, lineAngular } = styles;
+    const loading = data && data.loading;
     const user = data && data.user;
     const id_user = user && user.id_user;
     const role = user && user.role;
@@ -34,7 +35,15 @@ class ResultScreen extends Component {
     return (
       <View style={container}>
         {user !== null ? (
-          <ResultForm id_user={id_user} role={role} result_user={result_user} />
+          <View>
+            {!loading && (
+              <ResultForm
+                id_user={id_user}
+                role={role}
+                result_user={result_user}
+              />
+            )}
+          </View>
         ) : (
           <Text style={textError}>
             Для просмотра результатов войдите в систему

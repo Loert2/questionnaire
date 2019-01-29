@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
-import AnaliticForm from "./AnaliticForm";
 import FlatListForm from "./FlatListForm";
+import AnaliticForm from "./AnaliticForm";
 
 class ResultForm extends Component {
   constructor(props) {
@@ -46,46 +46,51 @@ class ResultForm extends Component {
     const { container, viewEven, viewUneven, text } = styles;
     const loading = data && data.loading;
     const result = data && data.result && data.result.edges;
-    console.log("result", result_user);
+    console.log("state", this.state);
     return (
       <View style={styles.container}>
-        {!loading && !openAn ? (
+        {!loading && (
           <View>
-            <FlatList
-              data={this.column}
-              renderItem={({ item }) => (
-                <ScrollView horizontal={true}>
-                  <View style={styles.viewEven}>
-                    <Text style={text}>{item.full_name}</Text>
-                  </View>
-                  <View style={viewUneven}>
-                    <Text style={text}>{item.point}</Text>
-                  </View>
-                  <View style={viewEven}>
-                    <Text style={text}> {item.result}</Text>
-                  </View>
-                  <View style={viewUneven}>
-                    <Text style={text}>{item.date}</Text>
-                  </View>
-                </ScrollView>
-              )}
-            />
-            <FlatListForm
-              table={role === "admin" ? result : result_user}
-              openAnalitic={this.openAnalitic}
-              viewEven={viewEven}
-              viewUneven={viewUneven}
-              text={text}
-            />
+            {openAn === false ? (
+              <View>
+                <FlatList
+                  data={this.column}
+                  renderItem={({ item }) => (
+                    <ScrollView horizontal={true}>
+                      <View style={styles.viewEven}>
+                        <Text style={text}>{item.full_name}</Text>
+                      </View>
+                      <View style={viewUneven}>
+                        <Text style={text}>{item.point}</Text>
+                      </View>
+                      <View style={viewEven}>
+                        <Text style={text}> {item.result}</Text>
+                      </View>
+                      <View style={viewUneven}>
+                        <Text style={text}>{item.date}</Text>
+                      </View>
+                    </ScrollView>
+                  )}
+                />
+                <FlatListForm
+                  table={role === "admin" ? result : result_user}
+                  openAnalitic={this.openAnalitic}
+                  viewEven={viewEven}
+                  viewUneven={viewUneven}
+                  text={text}
+                />
+              </View>
+            ) : (
+              <AnaliticForm id_user={idUser} id_ticket={id_ticket} />
+            )}
           </View>
-        ) : (
-          <AnaliticForm id_user={id_user} id_ticket={id_ticket} />
         )}
       </View>
     );
   }
 }
 
+//
 const RESULT_DATA = gql`
   query Result {
     result {
@@ -106,28 +111,6 @@ const RESULT_DATA = gql`
 `;
 
 const res_data = graphql(RESULT_DATA);
-
-// const RESULT_USER = gql`
-//   query ResultUser {
-//     user {
-//       role
-//       result_user {
-//         edges {
-//           node {
-//             point
-//             result
-//             date
-//             user {
-//               full_name
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
-//
-// const res_user = graphql(RESULT_USER);
 
 export default compose(res_data)(ResultForm);
 

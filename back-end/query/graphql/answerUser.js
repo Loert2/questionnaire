@@ -17,8 +17,9 @@ import { createConnection, createMutation, createPayload } from "./utilities";
 import { globalIdField, connectionArgs } from "graphql-relay";
 
 import { AnswerName, AnswerCorrect } from "./answer";
+import { QuestionNumber } from "./question";
 
-// === === === === === === QUERY ANSWER === === === === === ===
+// === === === === === === QUERY ANSWER USER === === === === === ===
 
 export const AnswerUserType = new GraphQLObjectType({
   name: "AnswerUser",
@@ -41,6 +42,7 @@ export const AnswerUserType = new GraphQLObjectType({
       name: "Id_question",
       type: GraphQLInt
     },
+    question: QuestionNumber,
     id_answer: {
       name: "Id_answer",
       type: GraphQLInt
@@ -68,12 +70,19 @@ export const AnswerUserConnection = createConnection({
     id_user: { type: GraphQLInt },
     id_ticket: { type: GraphQLInt }
   },
-
   resolveIdsList: async (obj, args, context) => {
     const { id_user, id_ticket } = args;
     return await getAnswerUserList({ id_user, id_ticket });
   }
 });
+
+export const AnswerUserFieldById = {
+  type: AnswerUserType,
+  args: { id_answer_user: { type: GraphQLInt } },
+  resolve: async (obj, args, context) => {
+    return await getAnswerUserById(args.id_answer_user);
+  }
+};
 
 // === === === === === === MUTATIONS === === === === === ===
 
@@ -111,8 +120,8 @@ const answerUserResolve = async (obj, args, context) => {
     id_answer,
     correct
   });
-  const userAnswer = await getAnswerUserById(id_answer_user);
-  return { userAnswer };
+  const answer_user = await getAnswerUserById(id_answer_user);
+  return { answer_user };
 };
 
 export const AddAnswerUserField = createMutation({

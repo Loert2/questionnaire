@@ -11,24 +11,22 @@ const FlatListForm = ({ table, openAnalitic, viewEven, viewUneven, text }) => {
   return (
     <FlatList
       data={table}
-      renderItem={({ item }) => (
+      renderItem={({ item: { node } }) => (
         <ScrollView horizontal={true}>
           <View style={viewEven}>
-            <Text style={text}>{item.node.user.full_name}</Text>
+            <Text style={text}>{node.user.full_name}</Text>
           </View>
           <TouchableOpacity
             style={viewUneven}
-            onPress={openAnalitic({
-              item: { node: { user: { id_user }, id_ticket } }
-            })}
+            onPress={() => openAnalitic(node.id_ticket, node.user.id_user)}
           >
-            <Text style={text}>{item.node.point}/11</Text>
+            <Text style={text}>{node.point}/11</Text>
           </TouchableOpacity>
           <View style={viewEven}>
-            <Text style={text}> {item.node.result} % </Text>
+            <Text style={text}> {node.result} % </Text>
           </View>
           <View style={viewUneven}>
-            <Text style={text}>{item.node.date}</Text>
+            <Text style={text}>{node.date}</Text>
           </View>
         </ScrollView>
       )}

@@ -26,6 +26,10 @@ export const QuestionType = new GraphQLObjectType({
       name: "Name",
       type: GraphQLString
     },
+    number_question: {
+      name: "NumberQuestion",
+      type: GraphQLInt
+    },
     answer: AnswerConnection
   })
 });
@@ -36,6 +40,13 @@ export const QuestionField = {
   resolve: async (obj, args, context) => {
     const { id, number } = args;
     return await getQuestionByIdTicketAndNumber({ id, number });
+  }
+};
+
+export const QuestionNumber = {
+  type: QuestionType,
+  resolve: async (obj, args, context) => {
+    return await getQuestionById(obj.id_question);
   }
 };
 

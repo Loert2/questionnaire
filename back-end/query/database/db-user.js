@@ -11,8 +11,8 @@ export const getUserById = async id_user => {
   return dataExists(data) ? { id_user, ...data[0] } : null;
 };
 
-export const getUserNameById = async id_user => {
-  const data = await rawByField("id_user", id_user).select("full_name");
+export const getUserResById = async id_user => {
+  const data = await rawByField("id_user", id_user);
   return dataExists(data) ? { ...data[0] } : null;
 };
 

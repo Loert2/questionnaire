@@ -14,7 +14,6 @@ export const getQuestionByIdTicketAndNumber = async ({ id, number }) => {
   return dataExists(data) ? { id, ...data[0] } : null;
 };
 
-//Для логики анализа ответов
 export const getQuestionById = async id => {
   const data = await questionTable().where({
     id_question: id

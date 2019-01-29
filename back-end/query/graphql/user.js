@@ -7,7 +7,7 @@ import {
 
 import {
   getUserById,
-  getUserNameById,
+  getUserResById,
   getUserByE_mail,
   addUser,
   changePassword
@@ -29,19 +29,19 @@ export const UserType = new GraphQLObjectType({
   fields: () => ({
     id: globalIdField(),
     id_user: {
-      name: "id_user",
+      name: "Id_user",
       type: GraphQLInt
     },
     full_name: {
-      name: "full_name",
+      name: "Full_name",
       type: GraphQLString
     },
     e_mail: {
-      name: "e_mail",
+      name: "E_mail",
       type: GraphQLString
     },
     role: {
-      name: "role",
+      name: "Role",
       type: GraphQLString
     },
     result_user: ResultUserConnection
@@ -58,7 +58,7 @@ export const UserField = {
 export const UserName = {
   type: UserType,
   resolve: async (obj, args, context) => {
-    return await getUserNameById(obj.id_user);
+    return await getUserResById(obj.id_user);
   }
 };
 
