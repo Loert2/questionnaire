@@ -19,12 +19,14 @@ class TestScreen extends Component {
     super(props);
     this.state = {
       id_ticket: null,
-      visible: false
+      visible: false,
+      id_answer_user: 0
     };
     this.startBtn = this.startBtn.bind(this);
     this.endBtn = this.endBtn.bind(this);
     this.exitModalBtn = this.exitModalBtn.bind(this);
     this.exitConfirmBtn = this.exitConfirmBtn.bind(this);
+    this.idAnsUsCollbeck = this.idAnsUsCollbeck.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -69,18 +71,26 @@ class TestScreen extends Component {
 
   exitConfirmBtn() {
     const { data, out, navigation } = this.props;
-    const { visible } = this.state;
+    const { id_ticket } = this.state;
+    this.exitModalBtn();
+    if (id_ticket !== null) {
+      this.endBtn();
+    } else {
+      out({}).then(res => {
+        navigation.push("CustomDrawer");
+        data.refetch();
+      });
+    }
+  }
+
+  idAnsUsCollbeck(id_answer_user) {
     this.setState({
-      visible: !visible
-    });
-    out({}).then(res => {
-      navigation.push("CustomDrawer");
-      data.refetch();
+      id_answer_user
     });
   }
 
   render() {
-    const { id_ticket, visible } = this.state;
+    const { id_ticket, visible, id_answer_user } = this.state;
     const { navigation, data } = this.props;
     const id_user = data && data.user && data.user.id_user;
     const {
@@ -100,7 +110,16 @@ class TestScreen extends Component {
       <View style={[container, visible && transparent]}>
         <Modal visible={visible} animationType="slide" transparent={true}>
           <View style={modal}>
-            <Text style={modalText}>Вы уверены что хотите выйти?</Text>
+            <Text style={modalText}>
+              Вы уверены что хотите выйти{" "}
+              {id_ticket === null ? (
+                <Text style={modalText}>из системы</Text>
+              ) : (
+                <Text style={modalText}>из теста</Text>
+              )}
+              ?
+            </Text>
+
             <ScrollView horizontal={true}>
               <TouchableOpacity
                 style={exitConfirmBtn}
@@ -136,6 +155,8 @@ class TestScreen extends Component {
             id_user={id_user}
             endBtn={this.endBtn}
             modalOpen={visible}
+            idAnsUsCollbeck={this.idAnsUsCollbeck}
+            id_answer_user={id_answer_user}
           />
         )}
         <View style={lineAngular} />

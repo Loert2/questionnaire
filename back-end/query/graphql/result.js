@@ -98,7 +98,6 @@ const resultResolve = async (obj, args, context) => {
   } else {
     var result = 0;
   }
-
   const id_result = await addResult({
     id_test,
     id_user,

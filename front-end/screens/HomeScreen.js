@@ -5,13 +5,15 @@ import gql from "graphql-tag";
 import user from "../query/UserQuery";
 
 class HomeScreen extends Component {
-  componentDidMount() {
-    const { data, navigation } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { navigation, data } = nextProps;
     const user = data && data.user;
     data.refetch();
-    // if (user !== null) {
-    //   navigation.push("Test");
-    // }
+    if (data.loading === false) {
+      if (user !== null) {
+        navigation.push("Test");
+      }
+    }
   }
 
   render() {

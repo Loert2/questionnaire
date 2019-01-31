@@ -17,7 +17,7 @@ import { nodeInterface } from "./node";
 
 import { createMutation, createPayload } from "./utilities";
 
-import { fromGlobalId, toGlobalId, globalIdField } from "graphql-relay";
+import { globalIdField } from "graphql-relay";
 
 import { ResultUserConnection } from "./resultUser";
 

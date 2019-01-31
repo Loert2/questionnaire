@@ -8,7 +8,8 @@ import {
 import {
   getAnswerUserById,
   addAnswerUser,
-  getAnswerUserList
+  updateAnswerUser,
+  getAnswerUserListUncorrect
 } from "../database/db-answer_user";
 import { getAnswerValidById } from "../database/db-answer";
 
@@ -72,7 +73,7 @@ export const AnswerUserConnection = createConnection({
   },
   resolveIdsList: async (obj, args, context) => {
     const { id_user, id_ticket } = args;
-    return await getAnswerUserList({ id_user, id_ticket });
+    return await getAnswerUserListUncorrect({ id_user, id_ticket });
   }
 });
 
@@ -86,7 +87,6 @@ export const AnswerUserFieldById = {
 
 // === === === === === === MUTATIONS === === === === === ===
 
-//TO-DO не возвращает результат
 const answerUserMutationPayload = createPayload({
   name: "AnswerUserMutationPayload",
   fields: () => ({
@@ -120,6 +120,7 @@ const answerUserResolve = async (obj, args, context) => {
     id_answer,
     correct
   });
+
   const answer_user = await getAnswerUserById(id_answer_user);
   return { answer_user };
 };
@@ -128,4 +129,36 @@ export const AddAnswerUserField = createMutation({
   input: answerUserInput,
   payload: answerUserMutationPayload,
   resolve: answerUserResolve
+});
+
+// === === === === === === UPDATE ANSWER USER === === === === === ===
+
+const answerUpUserInput = {
+  name: "AnswerUpUserInput",
+  fields: () => ({
+    id_answer_user: { name: "id_answer_user", type: GraphQLInt },
+    id_answer: { name: "id_answer", type: GraphQLInt }
+  })
+};
+
+const answerUpUserResolve = async (obj, args, context) => {
+  const { id_answer_user, id_answer } = args;
+
+  const correctAnswer = await getAnswerValidById(id_answer);
+  const correct = correctAnswer.is_valid;
+
+  const id_answerUser = await updateAnswerUser({
+    id_answer_user,
+    id_answer,
+    correct
+  });
+
+  const answer_user = await getAnswerUserById(id_answerUser);
+  return { answer_user };
+};
+
+export const UpdateAnswerUserField = createMutation({
+  input: answerUpUserInput,
+  payload: answerUserMutationPayload,
+  resolve: answerUpUserResolve
 });

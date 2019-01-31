@@ -16,7 +16,12 @@ import {
 } from "./user";
 
 import { TicketField } from "./ticket";
-import { AddAnswerUserField, AnswerUserConnection } from "./answerUser";
+import {
+  AddAnswerUserField,
+  UpdateAnswerUserField,
+  AnswerUserConnection,
+  AnswerUserFieldById
+} from "./answerUser";
 import { ResultConnection, CountingResultField } from "./result";
 
 const query = new GraphQLObjectType({
@@ -26,6 +31,7 @@ const query = new GraphQLObjectType({
     ticket: TicketField,
     result: ResultConnection,
     answer_user: AnswerUserConnection,
+    one_answer_user: AnswerUserFieldById,
     node: nodeField
   })
 });
@@ -38,6 +44,7 @@ const mutation = new GraphQLObjectType({
     UserSignOut: UserSignOutField,
     UserChangePassword: UserChangePasswordField,
     AddAnswerUser: AddAnswerUserField,
+    UpdateAnswerUser: UpdateAnswerUserField,
     CountingResult: CountingResultField
   })
 });
