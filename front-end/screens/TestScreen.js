@@ -39,6 +39,9 @@ class TestScreen extends Component {
           <Icon.Ionicons name={"md-exit"} size={40} color={"#000000"} />
         </TouchableOpacity>
       ),
+      headerStyle: {
+        backgroundColor: "#ffff4f"
+      },
       headerLeft: null,
       gesturesEnabled: false
     };
@@ -104,7 +107,8 @@ class TestScreen extends Component {
       transparent,
       modalText,
       textContainer,
-      lineAngular
+      lineAngular,
+      startContainer
     } = styles;
     return (
       <View style={[container, visible && transparent]}>
@@ -137,13 +141,13 @@ class TestScreen extends Component {
           </View>
         </Modal>
         {id_ticket === null ? (
-          <View>
+          <View style={startContainer}>
             <View style={textContainer}>
               <Text style={text}>
                 В тесте представлены экзаменационные билеты для проверки знаний
-                по электробезопасности
+                по электробезопасности.
               </Text>
-              <Text style={text}>Билет выбирается случайным образом</Text>
+              <Text style={text}>Билет выбирается случайным образом.</Text>
             </View>
             <TouchableOpacity style={startBtn} onPress={this.startBtn}>
               <Text style={buttonText}>Начать тест</Text>
@@ -188,8 +192,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff4f",
     borderRadius: 10,
     marginTop: 30,
-    marginLeft: 100,
-    marginRight: 100,
+    marginLeft: 85,
+    marginRight: 85,
     paddingTop: 18,
     paddingBottom: 18,
     paddingLeft: 24,
@@ -209,7 +213,7 @@ const styles = StyleSheet.create({
   },
   exitBtn: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffff4f",
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 24,
@@ -225,16 +229,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff4f",
     paddingTop: 12,
     paddingBottom: 12,
-    paddingLeft: 46,
-    paddingRight: 46,
+    paddingLeft: 47,
+    paddingRight: 47,
     borderRadius: 10
   },
   exitConfirmBtn: {
     backgroundColor: "#FF0000",
     paddingTop: 12,
     paddingBottom: 12,
-    paddingLeft: 46,
-    paddingRight: 46,
+    paddingLeft: 47,
+    paddingRight: 47,
     borderRadius: 10
   },
   modal: {
@@ -255,7 +259,8 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height
   },
   textContainer: {
-    marginTop: 100
+    paddingLeft: 9,
+    paddingRight: 9
   },
   lineAngular: {
     transform: [{ rotate: "-55deg" }],
@@ -266,5 +271,15 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     width: 250,
     backgroundColor: "#ffff4f"
+  },
+  startContainer: {
+    borderRadius: 10,
+    borderWidth: 10,
+    borderColor: "#ffff4f",
+    backgroundColor: "#f8f32b",
+    marginTop: 95,
+    marginLeft: 15,
+    marginRight: 15,
+    paddingBottom: 15
   }
 });

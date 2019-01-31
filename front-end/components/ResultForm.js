@@ -13,18 +13,8 @@ import FlatListForm from "./FlatListForm";
 import AnaliticForm from "./AnaliticForm";
 
 class ResultForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id_ticket: null,
-      idUser: null,
-      openAn: false
-    };
-    this.openAnalitic = this.openAnalitic.bind(this);
-  }
-
-  componentDidMount() {
-    const { data } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
     data.refetch();
   }
 
@@ -36,19 +26,23 @@ class ResultForm extends Component {
       date: "Дата"
     }
   ];
-  openAnalitic(id_ticket, id_user) {
-    this.setState({ id_ticket, idUser: id_user, openAn: true });
-  }
 
   render() {
-    const { id_ticket, idUser, openAn } = this.state;
-    const { data, id_user, role, result_user } = this.props;
-    const { container, viewEven, viewUneven, text } = styles;
+    const {
+      data,
+      id_user,
+      role,
+      result_user,
+      id_ticket,
+      idUser,
+      openAn,
+      openAnalitic
+    } = this.props;
+    const { viewEven, viewUneven, text } = styles;
     const loading = data && data.loading;
     const result = data && data.result && data.result.edges;
-    console.log("state", this.state);
     return (
-      <View style={styles.container}>
+      <View>
         {!loading && (
           <View>
             {openAn === false ? (
@@ -74,7 +68,7 @@ class ResultForm extends Component {
                 />
                 <FlatListForm
                   table={role === "admin" ? result : result_user}
-                  openAnalitic={this.openAnalitic}
+                  openAnalitic={openAnalitic}
                   viewEven={viewEven}
                   viewUneven={viewUneven}
                   text={text}
@@ -115,9 +109,6 @@ const res_data = graphql(RESULT_DATA);
 export default compose(res_data)(ResultForm);
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 30
-  },
   text: {
     fontSize: 18,
     color: "#000000",

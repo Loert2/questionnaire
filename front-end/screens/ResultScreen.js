@@ -1,19 +1,69 @@
 import React, { Component } from "react";
-import { Text, View, Dimensions, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet
+} from "react-native";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import ResultForm from "../components/ResultForm";
 import user from "../query/UserQuery";
+import { Icon } from "expo";
 
 class ResultScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id_ticket: null,
+      idUser: null,
+      openAn: false
+    };
+    this.openAnalitic = this.openAnalitic.bind(this);
+    this.exitAnalitic = this.exitAnalitic.bind(this);
+  }
+
   componentDidMount() {
     const { data } = this.props;
     data.refetch();
+    this.props.navigation.setParams({ exitAnalitic: this.exitAnalitic });
   }
 
-  static navigationOptions = {
-    header: null
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerLeft: (
+        <View>
+          {navigation.getParam("openAn") && (
+            <TouchableOpacity
+              style={styles.exitBtn}
+              onPress={navigation.getParam("exitAnalitic")}
+            >
+              <Icon.Ionicons
+                name={"md-arrow-back"}
+                size={30}
+                color={"#000000"}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      ),
+      headerStyle: {
+        backgroundColor: "#ffff4f"
+      },
+      gesturesEnabled: false
+    };
   };
+
+  async openAnalitic(id_ticket, id_user) {
+    await this.setState({ id_ticket, idUser: id_user, openAn: true });
+    await this.props.navigation.setParams({ openAn: this.state.openAn });
+  }
+
+  async exitAnalitic() {
+    await this.setState({ openAn: false });
+    await this.props.navigation.setParams({ openAn: this.state.openAn });
+  }
 
   column = [
     {
@@ -25,8 +75,9 @@ class ResultScreen extends Component {
   ];
 
   render() {
+    const { openAn, id_ticket, idUser } = this.state;
     const { data } = this.props;
-    const { container, textError, lineAngular } = styles;
+    const { container, textError, lineAngular, viewError } = styles;
     const loading = data && data.loading;
     const user = data && data.user;
     const id_user = user && user.id_user;
@@ -41,6 +92,10 @@ class ResultScreen extends Component {
                 id_user={id_user}
                 role={role}
                 result_user={result_user}
+                openAnalitic={this.openAnalitic}
+                id_ticket={id_ticket}
+                idUser={idUser}
+                openAn={openAn}
               />
             )}
           </View>
@@ -104,5 +159,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     width: 250,
     backgroundColor: "#ffff4f"
+  },
+  exitBtn: {
+    flexGrow: 1,
+    backgroundColor: "#ffff4f",
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 24,
+    paddingRight: 24
   }
 });

@@ -18,12 +18,15 @@ class QuestionForm extends Component {
     const id_question = question && question.id_question;
     const number_of_question =
       data && data.ticket && data.ticket.number_of_question;
-    const { container, text } = styles;
+    const { text, containerText, textHeader } = styles;
     return (
-      <View style={container}>
-        <Text style={text}>
-          Вопрос {step}/{number_of_question}: {question && question.name}
-        </Text>
+      <View>
+        <View style={containerText}>
+          <Text style={textHeader}>
+            Вопрос {step}/{number_of_question}
+          </Text>
+          <Text style={text}>{question && question.name}</Text>
+        </View>
         {question &&
           question.answer &&
           question.answer.edges &&
@@ -34,7 +37,7 @@ class QuestionForm extends Component {
                 title={el.node.name}
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
-                checkedColor="#ffff4f"
+                checkedColor="#b5a407"
                 checked={el.node.id_answer === answer ? true : false}
                 onPress={checked =>
                   this.props.handleChecked({
@@ -86,8 +89,16 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   text: {
-    padding: 23,
     color: "#000000",
     fontSize: 18
+  },
+  textHeader: {
+    paddingBottom: 5,
+    textAlign: "center",
+    color: "#000000",
+    fontSize: 24
+  },
+  containerText: {
+    padding: 23
   }
 });

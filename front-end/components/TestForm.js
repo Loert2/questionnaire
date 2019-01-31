@@ -37,7 +37,6 @@ class TestForm extends Component {
     const { id_user, id_ticket, addAns, upAns } = this.props;
     const id_answer_user =
       answer_user[step - 1] && answer_user[step - 1].id_answer_user;
-    console.log("id_answer_user.next", id_answer_user);
     if (id_answer_user === undefined) {
       addAns({
         id_user,

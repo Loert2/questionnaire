@@ -1,12 +1,13 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Icon } from "expo";
 
 const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
   return (
     <View style={styles.container}>
       {step > 1 && (
         <TouchableOpacity style={styles.previousBtn} onPress={previousBtn}>
-          <Text style={styles.buttonText}>Назад</Text>
+          <Icon.Ionicons name={"md-arrow-back"} size={25} color={"#000000"} />
         </TouchableOpacity>
       )}
       {step < lastStep && (
@@ -15,7 +16,11 @@ const Actions = ({ step, lastStep, previousBtn, nextBtn, submitBtn }) => {
           onPress={nextBtn}
           disabled={nextBtn.disabled}
         >
-          <Text style={styles.buttonText}>Вперед</Text>
+          <Icon.Ionicons
+            name={"md-arrow-forward"}
+            size={25}
+            color={"#000000"}
+          />
         </TouchableOpacity>
       )}
       {step === lastStep && (
@@ -40,8 +45,8 @@ const styles = StyleSheet.create({
   previousBtn: {
     backgroundColor: "#ffff4f",
     borderRadius: 10,
-    marginLeft: 50,
-    marginRight: 250,
+    marginLeft: 70,
+
     zIndex: 1,
     position: "absolute",
     paddingTop: 12,
@@ -52,8 +57,8 @@ const styles = StyleSheet.create({
   nextBtn: {
     backgroundColor: "#ffff4f",
     borderRadius: 10,
-    marginLeft: 250,
-    marginRight: 50,
+    marginLeft: 270,
+
     zIndex: 2,
     position: "absolute",
     paddingTop: 12,
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00cc00",
     borderRadius: 10,
     marginTop: 60,
-    marginLeft: 125,
+    marginLeft: 135,
     zIndex: 2,
     position: "absolute",
     paddingTop: 12,

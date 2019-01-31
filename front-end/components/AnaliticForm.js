@@ -11,6 +11,19 @@ import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 
 class AnaliticForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      answerOpen: false
+    };
+    this.answerBtn = this.answerBtn.bind(this);
+  }
+
+  answerBtn() {
+    const { answerOpen } = this.state;
+    this.setState({ answerOpen: !answerOpen });
+  }
+
   column = [
     {
       number_question: "№",
@@ -20,48 +33,62 @@ class AnaliticForm extends Component {
   ];
 
   render() {
+    const { answerOpen } = this.state;
     const { data } = this.props;
     const loading = data && data.loading;
     const answer_user = data && data.answer_user && data.answer_user.edges;
+    console.log("state", this.state);
     return (
       <View>
         {!loading && (
           <View>
             <FlatList
               data={this.column}
+              extraData={answerOpen}
               renderItem={({ item }) => (
                 <ScrollView horizontal={true}>
                   <View style={styles.viewNumber}>
                     <Text style={styles.text}>{item.number_question}</Text>
                   </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>{item.answer}</Text>
-                  </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}>{item.answerUser}</Text>
-                  </View>
+                  {!answerOpen ? (
+                    <View style={styles.viewUneven}>
+                      <Text style={styles.text}>{item.answer}</Text>
+                    </View>
+                  ) : (
+                    <View style={styles.viewEven}>
+                      <Text style={styles.text}>{item.answerUser}</Text>
+                    </View>
+                  )}
                 </ScrollView>
               )}
             />
             <FlatList
               data={answer_user}
-              renderItem={({ item }) => (
+              extraData={answerOpen}
+              renderItem={({ item: { node } }) => (
                 <ScrollView horizontal={true}>
                   <View style={styles.viewNumber}>
                     <Text style={styles.text}>
-                      {item.node.question.number_question}
+                      {node.question.number_question}
                     </Text>
                   </View>
-                  <View style={styles.viewUneven}>
-                    <Text style={styles.text}>
-                      {item.node.answer_name.name}
-                    </Text>
-                  </View>
-                  <View style={styles.viewEven}>
-                    <Text style={styles.text}>
-                      {item.node.answer_correct.name}
-                    </Text>
-                  </View>
+                  {!answerOpen ? (
+                    <TouchableOpacity
+                      style={styles.viewUneven}
+                      onPress={this.answerBtn}
+                    >
+                      <Text style={styles.text}>{node.answer_name.name}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.viewEven}
+                      onPress={this.answerBtn}
+                    >
+                      <Text style={styles.text}>
+                        {node.answer_correct.name}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </ScrollView>
               )}
             />
@@ -107,22 +134,22 @@ const styles = StyleSheet.create({
   },
   viewNumber: {
     backgroundColor: "#ffff4f",
-    height: 70,
+    height: 60,
     width: 40,
     margin: "auto",
     justifyContent: "center"
   },
   viewEven: {
     backgroundColor: "#008000",
-    height: 70,
-    width: 180,
+    height: 60,
+    width: 371,
     margin: "auto",
     justifyContent: "center"
   },
   viewUneven: {
-    backgroundColor: "#FF0000",
-    height: 70,
-    width: 180,
+    backgroundColor: "#990000",
+    height: 60,
+    width: 371,
     margin: "auto",
     justifyContent: "center"
   }

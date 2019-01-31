@@ -9,15 +9,13 @@ class HomeScreen extends Component {
     const { navigation, data } = nextProps;
     const user = data && data.user;
     data.refetch();
-    if (data.loading === false) {
-      if (user !== null) {
-        navigation.push("Test");
-      }
+    if (data.loading === false && user !== null) {
+      navigation.push("Test");
     }
   }
 
   render() {
-    const { container, text, lineMain, lineAngular } = styles;
+    const { container, text, lineMain, lineAngular, img } = styles;
     return (
       <View style={container}>
         <View style={lineMain}>
