@@ -9,7 +9,11 @@ import {
 import { Icon } from "expo";
 
 class FieldForm extends Component {
-  state = {};
+  state = {
+    full_name: "",
+    e_mail: "",
+    password: ""
+  };
   _handleSubmit = event => {
     event.preventDefault();
     this.props.onPress(this.state);

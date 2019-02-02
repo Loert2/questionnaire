@@ -84,7 +84,6 @@ class ResultForm extends Component {
   }
 }
 
-//
 const RESULT_DATA = gql`
   query Result {
     result {

@@ -35,14 +35,23 @@ class RegistrationScreen extends Component {
 
   _handleRegSubmit = ({ e_mail, full_name, password, confirmPassword }) => {
     const { data, reg, navigation } = this.props;
-    if (password === confirmPassword) {
-      reg({ e_mail, full_name, password }).then(res => {
-        navigation.push("Test");
-        data.refetch();
-      });
-      this.setState({ error: "" });
+    const valid = /\S+@\S+\.\S+/;
+    if (full_name !== "" && e_mail !== "" && password !== "") {
+      if (valid.test(e_mail)) {
+        if (password === confirmPassword) {
+          reg({ e_mail, full_name, password }).then(res => {
+            navigation.push("Test");
+            data.refetch();
+          });
+          this.setState({ error: "" });
+        } else {
+          this.setState({ error: "Пароли не совпадают" });
+        }
+      } else {
+        this.setState({ error: "Неправильный формат почты" });
+      }
     } else {
-      this.setState({ error: "Пароли не совпадают" });
+      this.setState({ error: "Заполнены не все поля" });
     }
   };
 

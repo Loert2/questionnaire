@@ -23,15 +23,19 @@ class AuthorisationScreen extends Component {
 
   _handleAuhtSubmit = ({ e_mail, password }) => {
     const { data, update, navigation } = this.props;
-    update({ e_mail, password }).then(res => {
-      if (res.data.UserSignIn.error === null) {
-        this.setState({ error: "" });
-        navigation.push("Test");
-        data.refetch();
-      } else {
-        this.setState({ error: "Неправильный логин или пароль" });
-      }
-    });
+    if (e_mail !== "" && password !== "") {
+      update({ e_mail, password }).then(res => {
+        if (res.data.UserSignIn.error === null) {
+          this.setState({ error: "" });
+          navigation.push("Test");
+          data.refetch();
+        } else {
+          this.setState({ error: "Неправильный логин или пароль" });
+        }
+      });
+    } else {
+      this.setState({ error: "Вы заполнили не все поля" });
+    }
   };
 
   render() {

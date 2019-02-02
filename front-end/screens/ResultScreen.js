@@ -25,9 +25,12 @@ class ResultScreen extends Component {
   }
 
   componentDidMount() {
-    const { data } = this.props;
-    data.refetch();
     this.props.navigation.setParams({ exitAnalitic: this.exitAnalitic });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
+    data.refetch();
   }
 
   static navigationOptions = ({ navigation }) => {
