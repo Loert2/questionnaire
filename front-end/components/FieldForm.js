@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  Dimensions
 } from "react-native";
 import { Icon } from "expo";
 
@@ -20,26 +21,30 @@ class FieldForm extends Component {
   };
 
   render() {
-    const { error, button } = this.props;
+    const { error, button, auth } = this.props;
     const {
       topStrip,
       icon,
       container,
+      containerInput,
       submitButton,
       submitButtonText,
       lineAngular
     } = styles;
     return (
-      <View>
-        <View style={topStrip}>
-          <Icon.Ionicons name="md-book" style={icon} />
-        </View>
-        <View style={container}>
+      <View style={container}>
+        {auth === true && (
+          <View style={topStrip}>
+            <Icon.Ionicons name="md-book" style={icon} />
+          </View>
+        )}
+        <View style={containerInput}>
           {this.props.fileds.map(el => (
             <TextInput
               key={el.label + el.type + this.props[el.name]}
               placeholder={el.label}
               style={styles.input}
+              placeholderTextColor="#000000"
               textContentType={el.type}
               secureTextEntry={el.secure}
               autoCapitalize="none"
@@ -61,31 +66,40 @@ export default FieldForm;
 
 const styles = StyleSheet.create({
   container: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    backgroundColor: "#ffff4f"
+  },
+  containerInput: {
     paddingTop: 23
   },
   input: {
-    marginLeft: 50,
-    marginRight: 50,
     marginTop: 15,
     marginBottom: 15,
-    height: 40,
+    marginLeft: 60,
+    marginRight: 60,
+    marginTop: 10,
     borderColor: "#000000",
-    borderWidth: 1,
-    padding: 12
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    fontSize: 18
   },
   submitButton: {
-    backgroundColor: "#ffff4f",
+    backgroundColor: "#f8f32b",
     borderColor: "#000000",
-    borderRadius: 10,
-    padding: 12,
+    borderRadius: 15,
+    paddingTop: 18,
+    paddingBottom: 18,
     marginLeft: 100,
     marginRight: 100,
     marginTop: 15,
-    borderWidth: 1
+    fontFamily: "space-mono"
   },
   submitButtonText: {
     color: "#000000",
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "space-mono",
+    fontSize: 18
   },
   error: {
     color: "red",
@@ -98,8 +112,7 @@ const styles = StyleSheet.create({
   },
   topStrip: {
     backgroundColor: "#ffff4f",
-    borderColor: "#000000",
-    borderWidth: 1
+    borderColor: "#000000"
   },
   lineAngular: {
     transform: [{ rotate: "-55deg" }],
@@ -109,6 +122,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     width: 250,
-    backgroundColor: "#ffff4f"
+    backgroundColor: "#f8f32b"
   }
 });

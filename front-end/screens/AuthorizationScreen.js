@@ -45,6 +45,7 @@ class AuthorisationScreen extends Component {
         button="Войти"
         onPress={this._handleAuhtSubmit}
         error={this.state.error}
+        auth={true}
       />
     );
   }

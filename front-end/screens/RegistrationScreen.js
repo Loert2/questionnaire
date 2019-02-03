@@ -62,6 +62,7 @@ class RegistrationScreen extends Component {
         button="Зарегестрироваться"
         onPress={this._handleRegSubmit}
         error={this.state.error}
+        auth={false}
       />
     );
   }

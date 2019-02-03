@@ -27,6 +27,7 @@ class TestScreen extends Component {
     this.exitModalBtn = this.exitModalBtn.bind(this);
     this.exitConfirmBtn = this.exitConfirmBtn.bind(this);
     this.idAnsUsCollbeck = this.idAnsUsCollbeck.bind(this);
+    this.exitTest = this.exitTest.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -42,21 +43,27 @@ class TestScreen extends Component {
       headerStyle: {
         backgroundColor: "#ffff4f"
       },
-      headerLeft: null,
+      headerLeft: (
+        <Text style={styles.time}>{navigation.getParam("timerTick")}</Text>
+      ),
       gesturesEnabled: false
     };
   };
 
   componentDidMount() {
-    this.props.navigation.setParams({ exitModalBtn: this.exitModalBtn });
+    this.props.navigation.setParams({
+      exitModalBtn: this.exitModalBtn
+    });
   }
 
-  startBtn() {
-    var random = Math.round(Math.random() * (15 - 1) + 1);
+  async startBtn() {
+    var random = await Math.round(Math.random() * (15 - 1) + 1);
     console.log(random);
-    this.setState({
+    await this.setState({
       id_ticket: random
     });
+    const time = 1800;
+    await this.timer(time);
   }
 
   endBtn() {
@@ -92,6 +99,50 @@ class TestScreen extends Component {
     });
   }
 
+  async timer(time) {
+    const { id_ticket } = this.state;
+    const { data, addRes, navigation } = this.props;
+    const id_user = data && data.user && data.user.id_user;
+    if (id_ticket !== null) {
+      if (time === 0) {
+        await addRes({
+          id_test: 1,
+          id_user,
+          id_ticket
+        }).then(res => this.endBtn());
+      } else {
+        var time = await (time - 1);
+        var sec = await parseInt(time);
+        var min = await parseInt(sec / 60);
+        var sec = await (sec - min * 60);
+        if (sec.toString().length === 1) {
+          var sec = await ("0" + sec);
+        }
+        var timerTick = await (min + ":" + sec);
+        await navigation.setParams({
+          timerTick
+        });
+        await this.setState({ timerTick });
+        await setTimeout(() => this.timer(time), 1000);
+      }
+    } else {
+      await navigation.setParams({
+        timerTick: ""
+      });
+    }
+  }
+
+  exitTest() {
+    const { addRes, data } = this.props;
+    const { id_ticket } = this.state;
+    const id_user = data && data.user && data.user.id_user;
+    addRes({
+      id_test: 1,
+      id_user,
+      id_ticket
+    }).then(res => this.endBtn());
+  }
+
   render() {
     const { id_ticket, visible, id_answer_user } = this.state;
     const { navigation, data } = this.props;
@@ -123,7 +174,6 @@ class TestScreen extends Component {
               )}
               ?
             </Text>
-
             <ScrollView horizontal={true}>
               <TouchableOpacity
                 style={exitConfirmBtn}
@@ -182,9 +232,24 @@ const out = graphql(SIGN_OUT_MUTATION, {
   })
 });
 
+const RESULT_MUTATION = gql`
+  mutation countingResult($inputResult: InputResult!) {
+    CountingResult(input: $inputResult) {
+      error
+    }
+  }
+`;
+
+const res = graphql(RESULT_MUTATION, {
+  props: ({ mutate }) => ({
+    addRes: inputResult => mutate({ variables: { inputResult } })
+  })
+});
+
 export default compose(
   user,
-  out
+  out,
+  res
 )(TestScreen);
 
 const styles = StyleSheet.create({
@@ -281,5 +346,10 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     paddingBottom: 15
+  },
+  time: {
+    textAlign: "center",
+    fontSize: 20,
+    padding: 10
   }
 });
