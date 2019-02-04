@@ -11,6 +11,7 @@ import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import FlatListForm from "./FlatListForm";
 import AnaliticForm from "./AnaliticForm";
+import { res_data } from "../query/ResultUser";
 
 class ResultForm extends Component {
   componentWillReceiveProps(nextProps) {
@@ -83,27 +84,6 @@ class ResultForm extends Component {
     );
   }
 }
-
-const RESULT_DATA = gql`
-  query Result {
-    result {
-      edges {
-        node {
-          id_ticket
-          point
-          result
-          date
-          user {
-            id_user
-            full_name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const res_data = graphql(RESULT_DATA);
 
 export default compose(res_data)(ResultForm);
 

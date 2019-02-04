@@ -37,7 +37,6 @@ class AnaliticForm extends Component {
     const { data } = this.props;
     const loading = data && data.loading;
     const answer_user = data && data.answer_user && data.answer_user.edges;
-    console.log("state", this.state);
     return (
       <View>
         {!loading && (

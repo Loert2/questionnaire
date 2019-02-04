@@ -27,7 +27,6 @@ class AuthorisationScreen extends Component {
       update({ e_mail, password }).then(res => {
         if (res.data.UserSignIn.error === null) {
           this.setState({ error: "" });
-          navigation.push("Test");
           data.refetch();
         } else {
           this.setState({ error: "Неправильный логин или пароль" });

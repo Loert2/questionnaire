@@ -40,7 +40,6 @@ class RegistrationScreen extends Component {
       if (valid.test(e_mail)) {
         if (password === confirmPassword) {
           reg({ e_mail, full_name, password }).then(res => {
-            navigation.push("Test");
             data.refetch();
           });
           this.setState({ error: "" });

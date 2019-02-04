@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 import ResultForm from "../components/ResultForm";
 import user from "../query/UserQuery";
 import { Icon } from "expo";
+import { res_user } from "../query/ResultUser";
 
 class ResultScreen extends Component {
   constructor(props) {
@@ -113,31 +114,6 @@ class ResultScreen extends Component {
   }
 }
 
-const RESULT_USER = gql`
-  query ResultUser {
-    user {
-      id_user
-      role
-      result_user {
-        edges {
-          node {
-            id_ticket
-            point
-            result
-            date
-            user {
-              id_user
-              full_name
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const res_user = graphql(RESULT_USER);
-
 export default compose(res_user)(ResultScreen);
 
 const styles = StyleSheet.create({
@@ -156,7 +132,7 @@ const styles = StyleSheet.create({
   lineAngular: {
     transform: [{ rotate: "-55deg" }],
     position: "absolute",
-    marginTop: 535,
+    marginTop: 450,
     marginLeft: 240,
     paddingTop: 20,
     paddingBottom: 20,

@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 16
   },
   icon: {
     fontSize: 100,

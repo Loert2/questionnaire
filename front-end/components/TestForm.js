@@ -5,6 +5,7 @@ import update from "immutability-helper";
 import Actions from "./Actions";
 import QuestionForm from "./QuestionForm";
 import { View, StyleSheet, Dimensions } from "react-native";
+// import { res_user } from "../query/ResultUser";
 
 class TestForm extends Component {
   constructor(props) {
@@ -28,64 +29,94 @@ class TestForm extends Component {
     });
   };
 
-  goNext() {
+  async goNext() {
     const {
       step,
       answer: { id_question, id_answer },
       answer_user
     } = this.state;
-    const { id_user, id_ticket, addAns, upAns } = this.props;
+    const { idAnsUsCollbeck, id_user, id_ticket, addAns, upAns } = this.props;
     const id_answer_user =
-      answer_user[step - 1] && answer_user[step - 1].id_answer_user;
-    if (id_answer_user === undefined) {
-      addAns({
-        id_user,
-        id_ticket,
-        id_question,
-        id_answer
-      }).then(res => {
-        const answerUserId = res.data.AddAnswerUser.answer_user.id_answer_user;
-        this.setState(
-          update(this.state, {
-            answer_user: {
-              $push: [{ id_answer_user: answerUserId }]
-            }
-          })
-        );
-      });
-    } else {
-      upAns({
-        id_answer_user,
-        id_answer
-      });
+      (await answer_user[step - 1]) &&
+      (await answer_user[step - 1].id_answer_user);
+    const id_col_answer_user =
+      (await answer_user[step]) && (await answer_user[step].id_answer_user);
+    if (id_answer !== null) {
+      if (id_answer_user === undefined) {
+        await addAns({
+          id_user,
+          id_ticket,
+          id_question,
+          id_answer
+        }).then(res => {
+          const answerUserId =
+            res.data.AddAnswerUser.answer_user.id_answer_user;
+          this.setState(
+            update(this.state, {
+              answer_user: {
+                $push: [{ id_answer_user: answerUserId }]
+              }
+            })
+          );
+        });
+      } else {
+        await upAns({
+          id_answer_user,
+          id_answer
+        });
+      }
     }
-    this.setState(
+    await this.setState(
       update(this.state, {
         step: { $set: step + 1 },
         answer: { id_question: { $set: null }, id_answer: { $set: null } }
       })
     );
+    await idAnsUsCollbeck(id_col_answer_user);
   }
 
-  goPrevious() {
-    const { step, answer_user } = this.state;
-    const { idAnsUsCollbeck } = this.props;
+  async goPrevious() {
+    const {
+      step,
+      answer: { id_question, id_answer },
+      answer_user
+    } = this.state;
+    const { idAnsUsCollbeck, id_user, id_ticket, addAns, upAns } = this.props;
     const id_answer_user =
-      answer_user[step - 2] && answer_user[step - 2].id_answer_user;
-    this.setState(
+      (await answer_user[step - 1]) &&
+      (await answer_user[step - 1].id_answer_user);
+    const id_col_answer_user =
+      (await answer_user[step - 2]) &&
+      (await answer_user[step - 2].id_answer_user);
+    if (id_answer !== null) {
+      if (id_answer_user === undefined) {
+        await addAns({
+          id_user,
+          id_ticket,
+          id_question,
+          id_answer
+        });
+      } else {
+        await upAns({
+          id_answer_user,
+          id_answer
+        });
+      }
+    }
+    await this.setState(
       update(this.state, {
         step: { $set: step - 1 },
         answer: { id_question: { $set: null }, id_answer: { $set: null } }
       })
     );
-    idAnsUsCollbeck(id_answer_user);
+    await idAnsUsCollbeck(id_col_answer_user);
   }
 
   async submitBtn() {
     const {
       answer: { id_question, id_answer }
     } = this.state;
-    const { id_user, id_ticket, addAns, addRes, endBtn } = this.props;
+    const { id_user, id_ticket, addAns, addRes, endBtn, data } = this.props;
     await addAns({
       id_user,
       id_ticket,
@@ -97,6 +128,7 @@ class TestForm extends Component {
       id_user,
       id_ticket
     }).then(res => endBtn());
+    await data.refetch();
   }
 
   render() {
