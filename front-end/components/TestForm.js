@@ -5,7 +5,6 @@ import update from "immutability-helper";
 import Actions from "./Actions";
 import QuestionForm from "./QuestionForm";
 import { View, StyleSheet, Dimensions } from "react-native";
-// import { res_user } from "../query/ResultUser";
 
 class TestForm extends Component {
   constructor(props) {
@@ -115,20 +114,34 @@ class TestForm extends Component {
   async submitBtn() {
     const {
       answer: { id_question, id_answer }
-    } = this.state;
+    } = await this.state;
     const { id_user, id_ticket, addAns, addRes, endBtn, data } = this.props;
     await addAns({
       id_user,
       id_ticket,
       id_question,
       id_answer
+    }).then(res => {
+      const answerUserId = res.data.AddAnswerUser.answer_user.id_answer_user;
+      this.setState(
+        update(this.state, {
+          answer_user: {
+            $push: [{ id_answer_user: answerUserId }]
+          }
+        })
+      );
     });
+    const { answer_user } = await this.state;
+    const id_answer_user_min = await answer_user[0].id_answer_user;
+    const id_answer_user_max = await answer_user[answer_user.length - 1]
+      .id_answer_user;
     await addRes({
       id_test: 1,
       id_user,
-      id_ticket
+      id_ticket,
+      id_answer_user_min,
+      id_answer_user_max
     }).then(res => endBtn());
-    await data.refetch();
   }
 
   render() {

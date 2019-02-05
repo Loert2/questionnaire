@@ -67,7 +67,7 @@ export const ResultConnection = createConnection({
 const resultMutationPayload = createPayload({
   name: "ResultMutationPayload",
   fields: () => ({
-    result: { name: "Result", type: ResultType },
+    result_user: { name: "Result", type: ResultType },
     error: { name: "Error", type: GraphQLString }
   })
 });
@@ -79,14 +79,26 @@ const inputResult = {
   fields: () => ({
     id_test: { name: "id_test", type: GraphQLInt },
     id_user: { name: "id_user", type: GraphQLInt },
-    id_ticket: { name: "id_ticket", type: GraphQLInt }
+    id_ticket: { name: "id_ticket", type: GraphQLInt },
+    id_answer_user_min: { name: "id_answer_user_min", type: GraphQLInt },
+    id_answer_user_max: { name: "id_answer_user_max", type: GraphQLInt }
   })
 };
 
 const resultResolve = async (obj, args, context) => {
-  const { id_test, id_user, id_ticket } = args;
+  const {
+    id_test,
+    id_user,
+    id_ticket,
+    id_answer_user_min,
+    id_answer_user_max
+  } = args;
 
-  const pointUser = await getAnswerUserList({ id_user, id_ticket });
+  const pointUser = await getAnswerUserList({
+    id_answer_user_min,
+    id_answer_user_max
+  });
+
   var point = 0;
   pointUser.forEach(el => {
     if (el.correct) {
@@ -105,8 +117,8 @@ const resultResolve = async (obj, args, context) => {
     point,
     result
   });
-  const resultVal = await getResultById(id_result);
-  return { resultVal };
+  const result_user = await getResultById(id_result);
+  return { result_user };
 };
 
 export const CountingResultField = createMutation({

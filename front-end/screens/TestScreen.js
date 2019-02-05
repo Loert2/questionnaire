@@ -27,7 +27,6 @@ class TestScreen extends Component {
     this.exitModalBtn = this.exitModalBtn.bind(this);
     this.exitConfirmBtn = this.exitConfirmBtn.bind(this);
     this.idAnsUsCollbeck = this.idAnsUsCollbeck.bind(this);
-    this.exitTest = this.exitTest.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -132,17 +131,6 @@ class TestScreen extends Component {
     }
   }
 
-  exitTest() {
-    const { addRes, data } = this.props;
-    const { id_ticket } = this.state;
-    const id_user = data && data.user && data.user.id_user;
-    addRes({
-      id_test: 1,
-      id_user,
-      id_ticket
-    }).then(res => this.endBtn());
-  }
-
   render() {
     const { id_ticket, visible, id_answer_user } = this.state;
     const { navigation, data } = this.props;
@@ -232,24 +220,9 @@ const out = graphql(SIGN_OUT_MUTATION, {
   })
 });
 
-const RESULT_MUTATION = gql`
-  mutation countingResult($inputResult: InputResult!) {
-    CountingResult(input: $inputResult) {
-      error
-    }
-  }
-`;
-
-const res = graphql(RESULT_MUTATION, {
-  props: ({ mutate }) => ({
-    addRes: inputResult => mutate({ variables: { inputResult } })
-  })
-});
-
 export default compose(
   user,
-  out,
-  res
+  out
 )(TestScreen);
 
 const styles = StyleSheet.create({

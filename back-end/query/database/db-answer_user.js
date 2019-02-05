@@ -12,11 +12,13 @@ export const getAnswerUserListUncorrect = async ({ id_ticket, id_user }) => {
   });
 };
 
-export const getAnswerUserList = async ({ id_ticket, id_user }) => {
-  return await answerUserTable().where({
-    id_ticket: id_ticket,
-    id_user: id_user
-  });
+export const getAnswerUserList = async ({
+  id_answer_user_min,
+  id_answer_user_max
+}) => {
+  return await answerUserTable()
+    .where("id_answer_user", ">=", id_answer_user_min)
+    .andWhere("id_answer_user", "<=", id_answer_user_max);
 };
 
 export const getAnswerUserById = async id => {
