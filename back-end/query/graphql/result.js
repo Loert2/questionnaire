@@ -1,7 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 import GraphQLDate from "graphql-date";
 
-import { getAnswerUserList } from "../database/db-answer_user";
+import {
+  getAnswerUserList,
+  addResIdInAnsUser
+} from "../database/db-answer_user";
 import { getResultList, addResult, getResultById } from "../database/db-result";
 
 import { nodeInterface } from "./node";
@@ -17,6 +20,10 @@ export const ResultType = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     id: globalIdField(),
+    id_result: {
+      name: "Id_result",
+      type: GraphQLInt
+    },
     id_test: {
       name: "Id_test",
       type: GraphQLInt
@@ -117,6 +124,13 @@ const resultResolve = async (obj, args, context) => {
     point,
     result
   });
+
+  await addResIdInAnsUser({
+    id_result,
+    id_answer_user_min,
+    id_answer_user_max
+  });
+
   const result_user = await getResultById(id_result);
   return { result_user };
 };

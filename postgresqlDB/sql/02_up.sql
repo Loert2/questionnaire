@@ -29,7 +29,8 @@ CREATE TABLE "answer_user" (
   "id_ticket" INTEGER NOT NULL REFERENCES "ticket" ("id_ticket"),
   "id_question" INTEGER NOT NULL REFERENCES "question" ("id_question"),
   "id_answer" INTEGER NOT NULL REFERENCES "answer" ("id_answer"),
-  "correct" BOOLEAN NOT NULL
+  "correct" BOOLEAN NOT NULL,
+  "id_result" INTEGER NULL REFERENCES "result" ("id_result")
 );
 
 CREATE TABLE "test" (

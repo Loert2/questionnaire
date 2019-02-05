@@ -6,8 +6,7 @@ import {
   Dimensions,
   StyleSheet
 } from "react-native";
-import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
+import { compose } from "react-apollo";
 import ResultForm from "../components/ResultForm";
 import user from "../query/UserQuery";
 import { Icon } from "expo";
@@ -17,8 +16,7 @@ class ResultScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id_ticket: null,
-      idUser: null,
+      id_result: null,
       openAn: false
     };
     this.openAnalitic = this.openAnalitic.bind(this);
@@ -59,8 +57,8 @@ class ResultScreen extends Component {
     };
   };
 
-  async openAnalitic(id_ticket, id_user) {
-    await this.setState({ id_ticket, idUser: id_user, openAn: true });
+  async openAnalitic(id_result) {
+    await this.setState({ id_result: id_result, openAn: true });
     await this.props.navigation.setParams({ openAn: this.state.openAn });
   }
 
@@ -79,7 +77,7 @@ class ResultScreen extends Component {
   ];
 
   render() {
-    const { openAn, id_ticket, idUser } = this.state;
+    const { openAn, id_result } = this.state;
     const { data } = this.props;
     const { container, textError, lineAngular, viewError } = styles;
     const loading = data && data.loading;
@@ -97,8 +95,7 @@ class ResultScreen extends Component {
                 role={role}
                 result_user={result_user}
                 openAnalitic={this.openAnalitic}
-                id_ticket={id_ticket}
-                idUser={idUser}
+                id_result={id_result}
                 openAn={openAn}
               />
             )}

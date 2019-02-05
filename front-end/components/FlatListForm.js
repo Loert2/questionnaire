@@ -18,7 +18,7 @@ const FlatListForm = ({ table, openAnalitic, viewEven, viewUneven, text }) => {
           </View>
           <TouchableOpacity
             style={viewUneven}
-            onPress={() => openAnalitic(node.id_ticket, node.user.id_user)}
+            onPress={() => openAnalitic(node.id_result)}
           >
             <Text style={text}>{node.point}/11</Text>
           </TouchableOpacity>

@@ -4,10 +4,9 @@ const answerUserTable = () => db("answer_user");
 
 const dataExists = data => data && data[0];
 
-export const getAnswerUserListUncorrect = async ({ id_ticket, id_user }) => {
+export const getAnswerUserListUncorrect = async ({ id_result }) => {
   return await answerUserTable().where({
-    id_ticket: id_ticket,
-    id_user: id_user,
+    id_result: id_result,
     correct: false
   });
 };
@@ -56,4 +55,15 @@ export const updateAnswerUser = async ({
     .update(data);
 
   return dataExists(returningData) ? returningData[0] : null;
+};
+
+export const addResIdInAnsUser = async ({
+  id_result,
+  id_answer_user_min,
+  id_answer_user_max
+}) => {
+  return await answerUserTable()
+    .where("id_answer_user", ">=", id_answer_user_min)
+    .andWhere("id_answer_user", "<=", id_answer_user_max)
+    .update({ id_result });
 };

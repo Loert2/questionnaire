@@ -9,12 +9,11 @@ const RESULT_USER = gql`
       result_user {
         edges {
           node {
-            id_ticket
+            id_result
             point
             result
             date
             user {
-              id_user
               full_name
             }
           }
@@ -29,12 +28,11 @@ const RESULT_DATA = gql`
     result {
       edges {
         node {
-          id_ticket
+          id_result
           point
           result
           date
           user {
-            id_user
             full_name
           }
         }

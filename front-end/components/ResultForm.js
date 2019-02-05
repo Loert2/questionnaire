@@ -7,8 +7,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
+import { compose } from "react-apollo";
 import FlatListForm from "./FlatListForm";
 import AnaliticForm from "./AnaliticForm";
 import { res_data } from "../query/ResultUser";
@@ -34,10 +33,9 @@ class ResultForm extends Component {
       id_user,
       role,
       result_user,
-      id_ticket,
-      idUser,
       openAn,
-      openAnalitic
+      openAnalitic,
+      id_result
     } = this.props;
     const { viewEven, viewUneven, text } = styles;
     const loading = data && data.loading;
@@ -76,7 +74,7 @@ class ResultForm extends Component {
                 />
               </View>
             ) : (
-              <AnaliticForm id_user={idUser} id_ticket={id_ticket} />
+              <AnaliticForm id_result={id_result} />
             )}
           </View>
         )}

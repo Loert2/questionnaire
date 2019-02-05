@@ -99,8 +99,8 @@ class AnaliticForm extends Component {
 }
 
 const ANSWER_UNCORRECT_USER = gql`
-  query AnswerUser($id_ticket: Int, $id_user: Int) {
-    answer_user(id_ticket: $id_ticket, id_user: $id_user) {
+  query AnswerUser($id_result: Int) {
+    answer_user(id_result: $id_result) {
       edges {
         node {
           question {
@@ -118,8 +118,8 @@ const ANSWER_UNCORRECT_USER = gql`
   }
 `;
 const ans_unc_user = graphql(ANSWER_UNCORRECT_USER, {
-  options: ({ id_ticket, id_user }) => ({
-    variables: { id_ticket, id_user }
+  options: ({ id_result }) => ({
+    variables: { id_result }
   })
 });
 

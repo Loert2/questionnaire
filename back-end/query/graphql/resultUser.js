@@ -16,6 +16,10 @@ export const ResultUserType = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     id: globalIdField(),
+    id_result: {
+      name: "Id_result",
+      type: GraphQLInt
+    },
     id_test: {
       name: "Id_test",
       type: GraphQLInt

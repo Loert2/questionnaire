@@ -79,7 +79,8 @@ CREATE TABLE public.answer_user (
     id_ticket integer NOT NULL,
     id_question integer NOT NULL,
     id_answer integer NOT NULL,
-    correct boolean NOT NULL
+    correct boolean NOT NULL,
+    id_result integer
 );
 
 
@@ -1011,7 +1012,7 @@ COPY public.answer (id_answer, id_question, name, is_valid) FROM stdin;
 -- Data for Name: answer_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.answer_user (id_answer_user, id_user, id_ticket, id_question, id_answer, correct) FROM stdin;
+COPY public.answer_user (id_answer_user, id_user, id_ticket, id_question, id_answer, correct, id_result) FROM stdin;
 \.
 
 
@@ -1201,6 +1202,8 @@ COPY public.result (id_result, id_test, id_user, id_ticket, point, result, date)
 --
 
 COPY public.session (id_session, uuid, id_user, updated_at) FROM stdin;
+16	033ed21c-7940-4b26-956a-e62d77d4e24a	3	2019-02-01 01:17:43.882+03
+42	e2d0aed2-396e-4280-84f4-4403ea75d8e1	2	2019-02-05 13:26:15.326+03
 \.
 
 
@@ -1210,6 +1213,8 @@ COPY public.session (id_session, uuid, id_user, updated_at) FROM stdin;
 
 COPY public.system_user (id_user, e_mail, full_name, password, role) FROM stdin;
 1	admin@mail.ru	SoSlow	redAd	admin
+2	den@mail.ru	den	den	student
+3	mark@mail.ru	mark	mark	student
 \.
 
 
@@ -1270,21 +1275,21 @@ SELECT pg_catalog.setval('public.question_id_question_seq', 165, true);
 -- Name: result_id_result_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.result_id_result_seq', 1, false);
+SELECT pg_catalog.setval('public.result_id_result_seq', 16, true);
 
 
 --
 -- Name: session_id_session_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.session_id_session_seq', 1, false);
+SELECT pg_catalog.setval('public.session_id_session_seq', 42, true);
 
 
 --
 -- Name: system_user_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.system_user_id_user_seq', 1, true);
+SELECT pg_catalog.setval('public.system_user_id_user_seq', 6, true);
 
 
 --
@@ -1387,6 +1392,14 @@ ALTER TABLE ONLY public.answer_user
 
 ALTER TABLE ONLY public.answer_user
     ADD CONSTRAINT answer_user_id_question_fkey FOREIGN KEY (id_question) REFERENCES public.question(id_question);
+
+
+--
+-- Name: answer_user answer_user_id_result_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.answer_user
+    ADD CONSTRAINT answer_user_id_result_fkey FOREIGN KEY (id_result) REFERENCES public.result(id_result);
 
 
 --

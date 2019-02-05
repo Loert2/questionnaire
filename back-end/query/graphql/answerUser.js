@@ -68,12 +68,11 @@ export const AnswerUserConnection = createConnection({
   field: AnswerUserField,
   args: {
     ...connectionArgs,
-    id_user: { type: GraphQLInt },
-    id_ticket: { type: GraphQLInt }
+    id_result: { type: GraphQLInt }
   },
   resolveIdsList: async (obj, args, context) => {
-    const { id_user, id_ticket } = args;
-    return await getAnswerUserListUncorrect({ id_user, id_ticket });
+    const { id_result } = args;
+    return await getAnswerUserListUncorrect({ id_result });
   }
 });
 
