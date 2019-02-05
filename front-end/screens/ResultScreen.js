@@ -21,10 +21,14 @@ class ResultScreen extends Component {
     };
     this.openAnalitic = this.openAnalitic.bind(this);
     this.exitAnalitic = this.exitAnalitic.bind(this);
+    this.resultRefetch = this.resultRefetch.bind(this);
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ exitAnalitic: this.exitAnalitic });
+    this.props.navigation.setParams({
+      exitAnalitic: this.exitAnalitic,
+      resultRefetch: this.resultRefetch
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,7 +42,7 @@ class ResultScreen extends Component {
         <View>
           {navigation.getParam("openAn") && (
             <TouchableOpacity
-              style={styles.exitBtn}
+              style={styles.navigBtn}
               onPress={navigation.getParam("exitAnalitic")}
             >
               <Icon.Ionicons
@@ -53,6 +57,14 @@ class ResultScreen extends Component {
       headerStyle: {
         backgroundColor: "#ffff4f"
       },
+      headerRight: (
+        <TouchableOpacity
+          style={styles.navigBtn}
+          onPress={navigation.getParam("resultRefetch")}
+        >
+          <Icon.Ionicons name={"md-refresh"} size={30} color={"#000000"} />
+        </TouchableOpacity>
+      ),
       gesturesEnabled: false
     };
   };
@@ -65,6 +77,11 @@ class ResultScreen extends Component {
   async exitAnalitic() {
     await this.setState({ openAn: false });
     await this.props.navigation.setParams({ openAn: this.state.openAn });
+  }
+
+  resultRefetch() {
+    const { data } = this.props;
+    data.refetch();
   }
 
   column = [
@@ -136,7 +153,7 @@ const styles = StyleSheet.create({
     width: 250,
     backgroundColor: "#ffff4f"
   },
-  exitBtn: {
+  navigBtn: {
     flexGrow: 1,
     backgroundColor: "#ffff4f",
     paddingTop: 8,
