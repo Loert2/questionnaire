@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   postgresql-db:
-    build: ./postgresqlDB
+    build: ./database
     ports:
       - 10100:5432
     env_file: ./environment/postgresql_db.env
