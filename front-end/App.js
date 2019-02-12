@@ -54,6 +54,16 @@ const styles = StyleSheet.create({
   }
 });
 
+//server
+// const client = new ApolloClient({
+//   link: new HttpLink({
+//     uri: "http://34.204.2.250:5000",
+//     credentials: "include"
+//   }),
+//   cache: new InMemoryCache()
+// });
+
+//emulator
 const client = new ApolloClient({
   link: new HttpLink({ uri: "http://10.0.2.2:5000", credentials: "include" }),
   cache: new InMemoryCache()

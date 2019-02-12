@@ -16,6 +16,9 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.ss.questionnaire"
+    },
     "ios": {
       "supportsTablet": true
     }

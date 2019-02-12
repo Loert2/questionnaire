@@ -4,7 +4,7 @@ services:
   graphql:
     depends_on:
       - postgresql-db
-    build: ./back-end
+    image: loert/questionnaire:back-end2
     env_file:
       - ./environment/node.env
       - ./environment/postgresql_db.env
@@ -14,9 +14,14 @@ services:
       - "5000:5000"
     links:
       - postgresql-db
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
   postgresql-db:
-    build: ./database
+    image: loert/questionnaire:db1
+    environment:
+      - PGDATA=/data
     env_file: ./environment/postgresql_db.env
+    volumes:
+      - data:/data
+
+volumes:
+  data:
